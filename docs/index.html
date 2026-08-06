@@ -26,7 +26,7 @@
       <a href="#features">Features</a>
       <a href="#how">How it works</a>
       <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener">GitHub</a>
-      <a class="btn btn-small" href="#download">Get it</a>
+      <a href="#install">Install</a>
     </nav>
   </header>
 
@@ -41,7 +41,7 @@
           live mirror overlay. Keyboard, mouse, and trackpad are hard-locked. Unlock with Touch ID.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#download">Build from source</a>
+          <a class="btn btn-primary" href="#install">Quick install</a>
           <a class="btn btn-ghost" href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener">View on GitHub</a>
         </div>
         <div class="hero-shortcuts">
@@ -65,8 +65,7 @@
               <span class="line accent">✓ All checks passed</span>
             </div>
             <div class="mock-overlay">
-              <div class="mock-pill"><span class="dot"></span> Mirrored</div>
-              <div class="mock-hint">Press ⌘⇧U to unlock</div>
+              <div class="mock-pill mock-pill-hidden"><span class="dot"></span> 👁</div>
             </div>
           </div>
         </div>
@@ -166,16 +165,24 @@
       </div>
     </section>
 
-    <section id="download" class="download">
+    <section id="install" class="download">
       <div class="download-card">
         <img src="assets/icon-512.png" alt="MirrorLock icon" width="80" height="80">
-        <h2>Ready to botsit?</h2>
-        <p>Clone the repo, open in Xcode, and press ⌘R. Requires Xcode 16+ on macOS 14+.</p>
+        <h2>Install in one command</h2>
+        <p>Downloads the latest release, installs to Applications, clears quarantine, and launches.</p>
+        <pre><code>curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh | bash</code></pre>
+        <a class="btn btn-primary" href="https://github.com/shubhransh-gupta/mirrorLock/releases/latest">Download latest release</a>
+        <a class="btn btn-ghost" href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener">Star on GitHub</a>
+      </div>
+    </section>
+
+    <section id="download" class="download">
+      <div class="download-card download-card-secondary">
+        <h2>Or build from source</h2>
+        <p>Requires Xcode 16+ on macOS 14+.</p>
         <pre><code>git clone https://github.com/shubhransh-gupta/mirrorLock.git
 cd mirrorLock
 open MirrorLock.xcodeproj</code></pre>
-        <a class="btn btn-primary" href="https://github.com/shubhransh-gupta/mirrorLock/archive/refs/heads/main.zip">Download ZIP</a>
-        <a class="btn btn-ghost" href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener">Star on GitHub</a>
       </div>
     </section>
   </main>

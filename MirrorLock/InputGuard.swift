@@ -29,7 +29,8 @@ final class InputGuard: NSObject {
     nonisolated(unsafe) private var menuBarThreshold: CGFloat = 50
 
     nonisolated(unsafe) var onUnlockHotkey: (() -> Void)?
-    nonisolated(unsafe) var onIntrusion: (() -> Void)?
+    nonisolated(unsafe) var onKeyboardIntrusion: (() -> Void)?
+    nonisolated(unsafe) var onPointerIntrusion: (() -> Void)?
 
     static func accessibilityGranted() -> Bool { AXIsProcessTrusted() }
     static func inputMonitoringGranted() -> Bool { CGPreflightListenEventAccess() }
@@ -150,6 +151,20 @@ final class InputGuard: NSObject {
                 }
                 return nil
             }
+            fireKeyboardIntrusion()
+            return nil
+        }
+
+        let isKeyboard = type == .keyUp || type == .flagsChanged
+        if isKeyboard {
+            fireKeyboardIntrusion()
+            return nil
+        }
+
+        let kSystemDefined: UInt32 = 14
+        if type.rawValue == kSystemDefined {
+            fireKeyboardIntrusion()
+            return nil
         }
 
         let isMouse = type == .leftMouseDown || type == .leftMouseUp ||
@@ -169,12 +184,22 @@ final class InputGuard: NSObject {
         let now = CACurrentMediaTime()
         if now - lastIntrusionTime > 0.5 {
             lastIntrusionTime = now
-            if let cb = onIntrusion {
+            if let cb = onPointerIntrusion {
                 Task { @MainActor in cb() }
             }
         }
 
         return nil
+    }
+
+    nonisolated private func fireKeyboardIntrusion() {
+        let now = CACurrentMediaTime()
+        if now - lastIntrusionTime > 0.5 {
+            lastIntrusionTime = now
+            if let cb = onKeyboardIntrusion {
+                Task { @MainActor in cb() }
+            }
+        }
     }
 
     nonisolated private func pointHitsWhitelistedWindow(_ loc: CGPoint) -> Bool {

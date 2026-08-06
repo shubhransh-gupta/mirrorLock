@@ -396,7 +396,18 @@ h2 {
   line-height: 1.7;
 }
 
-.download-card .btn { margin: 4px; }
+.mock-pill-hidden { opacity: 0.35; }
+.mock-pill-hidden .dot { animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.download-card-secondary {
+  margin-top: 24px;
+  padding: 40px;
+}
+.download-card-secondary img { display: none; }
 
 .site-footer {
   text-align: center;

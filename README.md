@@ -48,6 +48,16 @@ MirrorLock needs three permissions, used only while the lock is active:
 
 Grant them in **Settings → Permissions** inside the app, or via System Settings → Privacy & Security.
 
+## Quick install
+
+One command — downloads the latest release, installs to `/Applications`, and launches:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh | bash
+```
+
+Or download manually from [Releases](https://github.com/shubhransh-gupta/mirrorLock/releases/latest).
+
 ## Build from source
 
 Requires **Xcode 16+** on **macOS 14+**.
