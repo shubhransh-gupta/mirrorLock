@@ -50,7 +50,7 @@ final class IntruderAlert {
             borderView.animator().alphaValue = 0.3
         } completionHandler: { [weak self] in
             window.close()
-            self?.flashWindow = nil
+            Task { @MainActor in self?.flashWindow = nil }
         }
     }
 }

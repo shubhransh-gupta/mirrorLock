@@ -8,6 +8,7 @@ protocol ScreenMirrorDelegate: AnyObject {
     func screenMirrorDidStop(_ mirror: ScreenMirror, error: Error?)
 }
 
+@MainActor
 final class ScreenMirror: NSObject {
     private weak var imageView: NSImageView?
     weak var delegate: ScreenMirrorDelegate?

@@ -146,7 +146,7 @@ final class InputGuard: NSObject {
             let masked = event.flags.intersection(HotkeyCombo.realModifierMask)
             if keycode == unlockKeyCode && masked == unlockFlags {
                 if let cb = onUnlockHotkey {
-                    DispatchQueue.main.async { cb() }
+                    Task { @MainActor in cb() }
                 }
                 return nil
             }
@@ -170,7 +170,7 @@ final class InputGuard: NSObject {
         if now - lastIntrusionTime > 0.5 {
             lastIntrusionTime = now
             if let cb = onIntrusion {
-                DispatchQueue.main.async { cb() }
+                Task { @MainActor in cb() }
             }
         }
 

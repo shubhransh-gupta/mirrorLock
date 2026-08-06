@@ -2,6 +2,7 @@ import Cocoa
 import SwiftUI
 import CoreGraphics
 
+@MainActor
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenuDelegate {
     var statusBarItem: NSStatusItem?
     var toggleMenuItem: NSMenuItem?

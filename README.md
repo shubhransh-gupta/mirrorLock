@@ -2,6 +2,8 @@
 
 **Watch your AI work. Touch nothing.**
 
+🌐 **Website:** [shubhransh-gupta.github.io/mirrorLock](https://shubhransh-gupta.github.io/mirrorLock)
+
 MirrorLock is a macOS menu bar app for **botsitting** — leave your AI coding agents (Cursor, Claude Code, Copilot, etc.) running while you step away. It mirrors your live desktop behind a dimmed overlay and hard-locks keyboard, mouse, and trackpad at the macOS event-tap level. The screen stays fully visible so anyone can watch the agent work, but nothing can be touched. Unlock instantly with Touch ID.
 
 Inspired by the concept of [Wardlume](https://github.com/arpitagarwal1301/wardlume), rebuilt from scratch with a simpler architecture and MIT license.
@@ -59,6 +61,21 @@ open MirrorLock.xcodeproj
 Select the **MirrorLock** scheme and press **⌘R**.
 
 Built with Swift, SwiftUI, AppKit, and ScreenCaptureKit.
+
+## Website
+
+The marketing site lives in [`docs/`](docs/). Enable GitHub Pages under **Settings → Pages → Deploy from branch → `/docs` on `main`** to publish at `https://shubhransh-gupta.github.io/mirrorLock`.
+
+Preview locally: open `docs/index.html` in a browser.
+
+## App icon
+
+Icons are generated from [`scripts/generate_icon.py`](scripts/generate_icon.py):
+
+```bash
+pip3 install -r scripts/requirements.txt
+python3 scripts/generate_icon.py
+```
 
 ## License
 

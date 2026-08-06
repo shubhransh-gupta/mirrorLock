@@ -17,14 +17,14 @@ final class GlobalHotkey {
             { _, event, userData -> OSStatus in
                 guard let userData else { return OSStatus(eventNotHandledErr) }
                 let hotkey = Unmanaged<GlobalHotkey>.fromOpaque(userData).takeUnretainedValue()
-                hotkey.handler()
+                Task { @MainActor in hotkey.handler() }
                 return noErr
             },
             1, &eventType, selfPtr, &eventHandler
         )
         guard status == noErr else { return nil }
 
-        var hotKeyID = EventHotKeyID(signature: OSType(0x4D4C4F43), id: 1) // "MLOC"
+        let hotKeyID = EventHotKeyID(signature: OSType(0x4D4C4F43), id: 1) // "MLOC"
         let regStatus = RegisterEventHotKey(keyCode, modifiers, hotKeyID, GetApplicationEventTarget(), 0, &hotKeyRef)
         guard regStatus == noErr else { return nil }
     }
