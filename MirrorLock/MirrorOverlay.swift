@@ -5,10 +5,10 @@ final class MirrorOverlay {
     let window: NSWindow
     let imageView: NSImageView
     let dimLayer: CALayer
-    let statusPill: NSView
-    let hintPill: NSView
+    private let eyePill: NSView
+    private var hideEyeTask: DispatchWorkItem?
 
-    init(screenFrame: NSRect, unlockHint: String) {
+    init(screenFrame: NSRect) {
         let window = NSWindow(
             contentRect: screenFrame,
             styleMask: [.borderless],
@@ -36,8 +36,7 @@ final class MirrorOverlay {
         dimLayer.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
         container.layer?.addSublayer(dimLayer)
 
-        let statusPill = MirrorOverlay.makeStatusPill(in: container)
-        let hintPill = MirrorOverlay.makeHintPill(in: container, text: unlockHint)
+        let eyePill = MirrorOverlay.makeEyePill(in: container)
 
         window.contentView = container
         window.makeKeyAndOrderFront(nil)
@@ -45,35 +44,44 @@ final class MirrorOverlay {
         self.window = window
         self.imageView = imageView
         self.dimLayer = dimLayer
-        self.statusPill = statusPill
-        self.hintPill = hintPill
+        self.eyePill = eyePill
     }
 
-    func flashOnIntrusion() {
-        CATransaction.begin()
-        flashPill(statusPill)
-        flashPill(hintPill)
-        CATransaction.commit()
-    }
+    /// Reveals the eye briefly when someone tries keyboard input while locked.
+    func showEyeOnKeyboardIntrusion() {
+        hideEyeTask?.cancel()
 
-    private func flashPill(_ pill: NSView) {
-        guard let layer = pill.layer else { return }
-        let dark = NSColor.black.withAlphaComponent(0.65).cgColor
-        let red = NSColor.systemRed.withAlphaComponent(0.75).cgColor
+        eyePill.layer?.removeAnimation(forKey: "eyeFlash")
+        NSAnimationContext.runAnimationGroup { ctx in
+            ctx.duration = 0.25
+            eyePill.animator().alphaValue = 0.9
+        }
+
         let flash = CABasicAnimation(keyPath: "backgroundColor")
-        flash.fromValue = dark
-        flash.toValue = red
+        flash.fromValue = NSColor.black.withAlphaComponent(0.65).cgColor
+        flash.toValue = NSColor.systemRed.withAlphaComponent(0.75).cgColor
         flash.duration = 0.3
         flash.autoreverses = true
-        layer.add(flash, forKey: "intrusionFlash")
+        eyePill.layer?.add(flash, forKey: "eyeFlash")
+
+        let hide = DispatchWorkItem { [weak self] in
+            guard let self else { return }
+            NSAnimationContext.runAnimationGroup { ctx in
+                ctx.duration = 0.4
+                self.eyePill.animator().alphaValue = 0
+            }
+        }
+        hideEyeTask = hide
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5, execute: hide)
     }
 
-    private static func makeStatusPill(in container: NSView) -> NSView {
-        let pillW: CGFloat = 90, pillH: CGFloat = 44
+    private static func makeEyePill(in container: NSView) -> NSView {
+        let pillSize: CGFloat = 52
         let pill = NSView(frame: CGRect(
-            x: (container.bounds.width - pillW) / 2,
-            y: container.bounds.height - 80,
-            width: pillW, height: pillH
+            x: (container.bounds.width - pillSize) / 2,
+            y: container.bounds.height - 88,
+            width: pillSize,
+            height: pillSize
         ))
         pill.wantsLayer = true
         pill.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.65).cgColor
@@ -81,61 +89,24 @@ final class MirrorOverlay {
         pill.layer?.borderWidth = 1
         pill.layer?.borderColor = NSColor.white.withAlphaComponent(0.2).cgColor
         pill.autoresizingMask = [.minXMargin, .maxXMargin, .minYMargin]
+        pill.alphaValue = 0
 
-        let config = NSImage.SymbolConfiguration(pointSize: 22, weight: .medium)
-        if let symbol = NSImage(systemSymbolName: "lock.rectangle.on.rectangle",
-                                accessibilityDescription: "Locked")?
+        let config = NSImage.SymbolConfiguration(pointSize: 26, weight: .medium)
+        if let symbol = NSImage(systemSymbolName: "eye.fill",
+                                accessibilityDescription: "Watching")?
             .withSymbolConfiguration(config) {
-            let iv = NSImageView(frame: CGRect(x: 12, y: 10, width: 24, height: 24))
+            let iv = NSImageView(frame: CGRect(
+                x: (pillSize - 28) / 2,
+                y: (pillSize - 28) / 2,
+                width: 28,
+                height: 28
+            ))
             iv.image = symbol
             iv.contentTintColor = .white
             pill.addSubview(iv)
         }
 
-        let label = NSTextField(labelWithString: "Mirrored")
-        label.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .semibold)
-        label.textColor = .white
-        label.frame = CGRect(x: 40, y: 14, width: 50, height: 16)
-        pill.addSubview(label)
-
         container.addSubview(pill)
-        return pill
-    }
-
-    private static func makeHintPill(in container: NSView, text: String) -> NSView {
-        let label = NSTextField(labelWithString: text)
-        label.font = NSFont.monospacedSystemFont(ofSize: 13, weight: .medium)
-        label.textColor = .white
-        label.sizeToFit()
-
-        let padX: CGFloat = 18, padY: CGFloat = 10
-        let pillW = label.frame.width + padX * 2
-        let pillH = label.frame.height + padY * 2
-
-        let pill = NSView(frame: CGRect(
-            x: (container.bounds.width - pillW) / 2,
-            y: 36,
-            width: pillW, height: pillH
-        ))
-        pill.wantsLayer = true
-        pill.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.65).cgColor
-        pill.layer?.cornerRadius = pillH / 2
-        pill.layer?.borderWidth = 1
-        pill.layer?.borderColor = NSColor.white.withAlphaComponent(0.2).cgColor
-        pill.autoresizingMask = [.minXMargin, .maxXMargin, .maxYMargin]
-        pill.alphaValue = 0
-
-        label.frame = CGRect(x: padX, y: padY, width: label.frame.width, height: label.frame.height)
-        pill.addSubview(label)
-        container.addSubview(pill)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            NSAnimationContext.runAnimationGroup { ctx in
-                ctx.duration = 0.8
-                pill.animator().alphaValue = 0.8
-            }
-        }
-
         return pill
     }
 }

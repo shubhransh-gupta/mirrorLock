@@ -133,10 +133,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
         let screen = NSScreen.main ?? NSScreen.screens.first
         let frame = screen?.frame ?? .zero
 
-        let overlay = MirrorOverlay(
-            screenFrame: frame,
-            unlockHint: "Press ⌘⇧U to unlock"
-        )
+        let overlay = MirrorOverlay(screenFrame: frame)
         mirrorOverlay = overlay
 
         toggleMenuItem?.title = "Deactivate Mirror Lock"
@@ -162,10 +159,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
         }
 
         guard_.onUnlockHotkey = { [weak self] in self?.unlockWithBiometrics() }
-        guard_.onIntrusion = { [weak self] in
+        guard_.onKeyboardIntrusion = { [weak self] in
             guard let self, !self.isAuthenticating else { return }
             guard ProcessInfo.processInfo.systemUptime - self.lockedAt > self.gracePeriod else { return }
-            self.mirrorOverlay?.flashOnIntrusion()
+            self.mirrorOverlay?.showEyeOnKeyboardIntrusion()
+        }
+        guard_.onPointerIntrusion = { [weak self] in
+            guard let self, !self.isAuthenticating else { return }
+            guard ProcessInfo.processInfo.systemUptime - self.lockedAt > self.gracePeriod else { return }
             self.intruderAlert?.trigger(on: screen)
         }
 
