@@ -7,6 +7,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
     var statusBarItem: NSStatusItem?
     var toggleMenuItem: NSMenuItem?
     var unlockMenuItem: NSMenuItem?
+    var autoLockStatusMenuItem: NSMenuItem?
+    var keepAwakeMenuItem: NSMenuItem?
 
     var mirrorOverlay: MirrorOverlay?
     var screenMirror: ScreenMirror?
@@ -24,14 +26,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
     private let gracePeriod: TimeInterval = 4.0
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        setupMenuBar()
         setupManagers()
+        setupMenuBar()
         setupHotkeys()
-        setupSleepHandlers()
+        setupSleepAndDisplayHandlers()
+        setupIdleMonitoring()
 
         if !lockState.allPermissionsReady {
             showPreferences()
         }
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        deactivateLock()
+        IdleLockManager.shared.stopMonitoring()
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
@@ -52,23 +60,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
         let menu = NSMenu()
         menu.delegate = self
 
+        let activateCombo = Preferences.shared.activateHotkey
         toggleMenuItem = NSMenuItem(
-            title: "Activate Mirror Lock",
+            title: "Activate Mirror Lock (\(activateCombo.displayString))",
             action: #selector(toggleLock),
-            keyEquivalent: "m"
+            keyEquivalent: ""
         )
-        toggleMenuItem?.keyEquivalentModifierMask = [.command, .shift]
         toggleMenuItem?.target = self
         menu.addItem(toggleMenuItem!)
 
-        menu.addItem(NSMenuItem.separator())
-
-        let prefsItem = NSMenuItem(title: "Settings...", action: #selector(showPreferences), keyEquivalent: ",")
-        prefsItem.target = self
-        menu.addItem(prefsItem)
-
+        let unlockCombo = Preferences.shared.unlockHotkey
         unlockMenuItem = NSMenuItem(
-            title: "Unlock with Touch ID (⌘⇧U)...",
+            title: "Unlock with Touch ID / Apple Watch (\(unlockCombo.displayString))...",
             action: #selector(unlockWithBiometrics),
             keyEquivalent: ""
         )
@@ -78,11 +81,74 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
 
         menu.addItem(NSMenuItem.separator())
 
-        let quitItem = NSMenuItem(title: "Quit", action: #selector(quitApp), keyEquivalent: "q")
+        autoLockStatusMenuItem = NSMenuItem(
+            title: autoLockMenuTitle(),
+            action: #selector(toggleAutoLockQuick),
+            keyEquivalent: ""
+        )
+        autoLockStatusMenuItem?.target = self
+        menu.addItem(autoLockStatusMenuItem!)
+
+        keepAwakeMenuItem = NSMenuItem(
+            title: "Keep Mac Awake: \(Preferences.shared.keepMacAwake ? "On" : "Off")",
+            action: #selector(toggleKeepAwakeQuick),
+            keyEquivalent: ""
+        )
+        keepAwakeMenuItem?.target = self
+        menu.addItem(keepAwakeMenuItem!)
+
+        menu.addItem(NSMenuItem.separator())
+
+        let prefsItem = NSMenuItem(title: "Settings...", action: #selector(showPreferences), keyEquivalent: ",")
+        prefsItem.target = self
+        menu.addItem(prefsItem)
+
+        let updatesItem = NSMenuItem(title: "Check for Updates...", action: #selector(checkForUpdates), keyEquivalent: "")
+        updatesItem.target = self
+        menu.addItem(updatesItem)
+
+        menu.addItem(NSMenuItem.separator())
+
+        let quitItem = NSMenuItem(title: "Quit MirrorLock", action: #selector(quitApp), keyEquivalent: "q")
         quitItem.target = self
         menu.addItem(quitItem)
 
         statusBarItem?.menu = menu
+    }
+
+    private func autoLockMenuTitle() -> String {
+        let mins = Preferences.shared.autoLockIdleMinutes
+        return mins > 0 ? "Auto-Lock: \(mins)m idle" : "Auto-Lock: Off"
+    }
+
+    @objc private func toggleAutoLockQuick() {
+        let current = Preferences.shared.autoLockIdleMinutes
+        if current == 0 {
+            Preferences.shared.autoLockIdleMinutes = 5
+        } else if current == 5 {
+            Preferences.shared.autoLockIdleMinutes = 10
+        } else {
+            Preferences.shared.autoLockIdleMinutes = 0
+        }
+        autoLockStatusMenuItem?.title = autoLockMenuTitle()
+    }
+
+    @objc private func toggleKeepAwakeQuick() {
+        Preferences.shared.keepMacAwake.toggle()
+        keepAwakeMenuItem?.title = "Keep Mac Awake: \(Preferences.shared.keepMacAwake ? "On" : "Off")"
+        if mirrorOverlay != nil {
+            if Preferences.shared.keepMacAwake {
+                PowerManager.shared.preventSleep()
+            } else {
+                PowerManager.shared.allowSleep()
+            }
+        }
+    }
+
+    @objc private func checkForUpdates() {
+        if let url = URL(string: "https://github.com/shubhransh-gupta/mirrorLock/releases/latest") {
+            NSWorkspace.shared.open(url)
+        }
     }
 
     private func setupManagers() {
@@ -92,18 +158,49 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
         lockState = LockState()
         lockState.onToggle = { [weak self] in self?.toggleLock() }
         lockState.recheckPermissions()
-    }
 
-    private func setupHotkeys() {
-        activationHotkey = GlobalHotkey(
-            keyCode: UInt32(HotkeyCombo.activate.keyCode),
-            modifiers: HotkeyCombo.activate.carbonModifiers
-        ) { [weak self] in
-            self?.toggleLock()
+        Preferences.shared.onShortcutsChanged = { [weak self] in
+            Task { @MainActor [weak self] in
+                self?.setupHotkeys()
+                self?.updateMenuTitles()
+            }
         }
     }
 
-    private func setupSleepHandlers() {
+    private func updateMenuTitles() {
+        let activateCombo = Preferences.shared.activateHotkey
+        let unlockCombo = Preferences.shared.unlockHotkey
+        if mirrorOverlay != nil {
+            toggleMenuItem?.title = "Deactivate Mirror Lock"
+        } else {
+            toggleMenuItem?.title = "Activate Mirror Lock (\(activateCombo.displayString))"
+        }
+        unlockMenuItem?.title = "Unlock with Touch ID / Apple Watch (\(unlockCombo.displayString))..."
+        autoLockStatusMenuItem?.title = autoLockMenuTitle()
+        keepAwakeMenuItem?.title = "Keep Mac Awake: \(Preferences.shared.keepMacAwake ? "On" : "Off")"
+    }
+
+    private func setupHotkeys() {
+        activationHotkey = nil
+        let combo = Preferences.shared.activateHotkey
+        activationHotkey = GlobalHotkey(
+            keyCode: UInt32(combo.keyCode),
+            modifiers: combo.carbonModifiers
+        ) { [weak self] in
+            self?.toggleLock()
+        }
+
+        if let guard_ = inputGuard {
+            guard_.setUnlockCombo(Preferences.shared.unlockHotkey)
+            guard_.setEmergencyExit(
+                enabled: Preferences.shared.emergencyExitEnabled,
+                combo: Preferences.shared.emergencyExitHotkey
+            )
+            guard_.setAppleWatchTapUnlock(enabled: Preferences.shared.appleWatchTapUnlock)
+        }
+    }
+
+    private func setupSleepAndDisplayHandlers() {
         let center = NSWorkspace.shared.notificationCenter
         center.addObserver(self, selector: #selector(systemWillSleep),
                            name: NSWorkspace.willSleepNotification, object: nil)
@@ -111,6 +208,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
                            name: NSWorkspace.screensDidSleepNotification, object: nil)
         center.addObserver(self, selector: #selector(systemDidWake),
                            name: NSWorkspace.didWakeNotification, object: nil)
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(displayParametersDidChange),
+            name: NSApplication.didChangeScreenParametersNotification,
+            object: nil
+        )
+    }
+
+    private func setupIdleMonitoring() {
+        IdleLockManager.shared.isLockActive = { [weak self] in
+            self?.mirrorOverlay != nil
+        }
+        IdleLockManager.shared.onAutoLockTriggered = { [weak self] in
+            guard let self, self.mirrorOverlay == nil else { return }
+            self.activateLock()
+        }
+        IdleLockManager.shared.startMonitoring()
     }
 
     // MARK: - Lock Toggle
@@ -123,12 +238,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
         }
     }
 
-    private func activateLock() {
+    func activateLock() {
         guard InputGuard.permissionsReady(), CGPreflightScreenCaptureAccess() else {
             showPermissionAlert()
             showPreferences()
             return
         }
+
+        IdleLockManager.shared.dismissCountdown()
 
         let screen = NSScreen.main ?? NSScreen.screens.first
         let frame = screen?.frame ?? .zero
@@ -136,11 +253,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
         let overlay = MirrorOverlay(screenFrame: frame)
         mirrorOverlay = overlay
 
-        toggleMenuItem?.title = "Deactivate Mirror Lock"
-        toggleMenuItem?.keyEquivalent = ""
+        updateMenuTitles()
         unlockMenuItem?.isEnabled = true
 
-        installSecondaryBlackouts(excluding: screen)
+        if Preferences.shared.blackoutSecondaryScreens {
+            installSecondaryBlackouts(excluding: screen)
+        }
 
         let mirror = ScreenMirror(imageView: overlay.imageView)
         mirror.delegate = self
@@ -152,13 +270,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
             return
         }
 
-        guard guard_.install(overlayWindow: overlay.window, unlock: HotkeyCombo.unlock) else {
+        let emergency = (
+            enabled: Preferences.shared.emergencyExitEnabled,
+            combo: Preferences.shared.emergencyExitHotkey
+        )
+        guard guard_.install(
+            overlayWindow: overlay.window,
+            unlock: Preferences.shared.unlockHotkey,
+            emergencyExit: emergency,
+            watchTapUnlock: Preferences.shared.appleWatchTapUnlock
+        ) else {
             showInputLockFailedAlert()
             deactivateLock()
             return
         }
 
         guard_.onUnlockHotkey = { [weak self] in self?.unlockWithBiometrics() }
+        guard_.onEmergencyExit = { [weak self] in self?.deactivateLock() }
         guard_.onKeyboardIntrusion = { [weak self] in
             guard let self, !self.isAuthenticating else { return }
             guard ProcessInfo.processInfo.systemUptime - self.lockedAt > self.gracePeriod else { return }
@@ -170,13 +298,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
             self.intruderAlert?.trigger(on: screen)
         }
 
+        if Preferences.shared.keepMacAwake {
+            PowerManager.shared.preventSleep()
+        }
+
         lockedAt = ProcessInfo.processInfo.systemUptime
         lockState.isLocked = true
     }
 
-    private func deactivateLock() {
+    func deactivateLock() {
         guard mirrorOverlay != nil else { return }
 
+        PowerManager.shared.allowSleep()
         inputGuard?.uninstall()
         screenMirror?.stopCapture()
         screenMirror = nil
@@ -187,16 +320,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
         mirrorOverlay?.window.close()
         mirrorOverlay = nil
 
-        toggleMenuItem?.title = "Activate Mirror Lock"
-        toggleMenuItem?.keyEquivalent = "m"
-        toggleMenuItem?.keyEquivalentModifierMask = [.command, .shift]
+        updateMenuTitles()
         unlockMenuItem?.isEnabled = false
         lockState.isLocked = false
     }
 
-    // MARK: - Secondary Displays
+    // MARK: - Secondary Displays & Screen Changes
 
     private func installSecondaryBlackouts(excluding primary: NSScreen?) {
+        for w in secondaryWindows { w.close() }
+        secondaryWindows.removeAll()
+        inputGuard?.clearSecondaryOverlays()
+
         let level = NSWindow.Level(rawValue: Int(CGShieldingWindowLevel()))
         for screen in NSScreen.screens where screen != primary {
             let w = NSWindow(contentRect: screen.frame, styleMask: [.borderless],
@@ -213,7 +348,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
         }
     }
 
-    // MARK: - Biometric Unlock
+    @objc private func displayParametersDidChange() {
+        guard mirrorOverlay != nil else { return }
+        // Keep lock active and re-adapt to new screen geometry
+        let primary = NSScreen.main ?? NSScreen.screens.first
+        if let primary {
+            mirrorOverlay?.window.setFrame(primary.frame, display: true)
+        }
+        if Preferences.shared.blackoutSecondaryScreens {
+            installSecondaryBlackouts(excluding: primary)
+        }
+    }
+
+    // MARK: - Biometric Unlock (Touch ID, Apple Watch, Password)
 
     @objc func unlockWithBiometrics() {
         guard mirrorOverlay != nil else { return }
@@ -258,12 +405,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
             return
         }
 
-        let root = SettingsView().environmentObject(lockState)
+        let root = SettingsView()
+            .environmentObject(lockState)
+            .environmentObject(Preferences.shared)
+
         let hosting = NSHostingController(rootView: root)
         let window = NSWindow(contentViewController: hosting)
         window.title = "MirrorLock Settings"
         window.styleMask = [.titled, .closable, .miniaturizable]
-        window.setContentSize(NSSize(width: 560, height: 440))
+        window.setContentSize(NSSize(width: 600, height: 480))
         window.center()
         window.isReleasedWhenClosed = false
         window.delegate = self
@@ -307,6 +457,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
 
     func menuWillOpen(_ menu: NSMenu) {
         menuIsOpen = true
+        updateMenuTitles()
         mirrorOverlay?.window.level = .popUpMenu
         for w in secondaryWindows { w.level = .popUpMenu }
     }

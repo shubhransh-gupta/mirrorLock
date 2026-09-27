@@ -10,17 +10,37 @@ permissions:
 
 jobs:
   build-and-release:
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Build release
+      - name: Build release packages (ZIP, PKG, and Homebrew Cask)
         run: |
           chmod +x scripts/build-release.sh
           ./scripts/build-release.sh "${GITHUB_REF_NAME#v}"
 
-      - name: Upload release asset
+      - name: Upload release assets to GitHub
         uses: softprops/action-gh-release@v2
         with:
-          files: MirrorLock-*.zip
+          files: |
+            MirrorLock-*.zip
+            MirrorLock-*.pkg
           generate_release_notes: true
+
+      - name: Update Homebrew Tap
+        if: success()
+        env:
+          TAP_PAT: ${{ secrets.HOMEBREW_TAP_TOKEN || github.token }}
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "Updating Homebrew Tap for v${VERSION}..."
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git clone "https://x-access-token:${TAP_PAT}@github.com/shubhransh-gupta/homebrew-tap.git" tap_repo || exit 0
+          mkdir -p tap_repo/Casks
+          cp Casks/mirrorlock.rb tap_repo/Casks/mirrorlock.rb
+          cd tap_repo
+          git add Casks/mirrorlock.rb
+          git commit -m "Update mirrorlock to v${VERSION}" || echo "No changes to commit"
+          git push origin main || echo "Tap push skipped or failed"

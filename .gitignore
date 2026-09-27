@@ -1,5 +1,6 @@
 # Release artifacts
 MirrorLock-*.zip
+MirrorLock-*.pkg
 
 # Xcode
 build/

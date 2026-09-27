@@ -18,10 +18,17 @@ final class InputGuard: NSObject {
     nonisolated(unsafe) private var tapRef: CFMachPort?
     nonisolated(unsafe) private var runLoopSource: CFRunLoopSource?
     nonisolated(unsafe) private var lastIntrusionTime: CFTimeInterval = -.infinity
+    nonisolated(unsafe) private var lastWatchPromptTime: CFTimeInterval = -.infinity
     nonisolated(unsafe) private var gestureMonitor: Any?
 
     nonisolated(unsafe) private var unlockKeyCode: Int64 = Int64(HotkeyCombo.unlock.keyCode)
     nonisolated(unsafe) private var unlockFlags: CGEventFlags = HotkeyCombo.unlock.cgEventFlags
+
+    nonisolated(unsafe) private var emergencyExitEnabled: Bool = false
+    nonisolated(unsafe) private var emergencyExitKeyCode: Int64 = Int64(HotkeyCombo.emergencyExitDefault.keyCode)
+    nonisolated(unsafe) private var emergencyExitFlags: CGEventFlags = HotkeyCombo.emergencyExitDefault.cgEventFlags
+
+    nonisolated(unsafe) private var appleWatchTapUnlock: Bool = false
 
     nonisolated(unsafe) private var overlayWindowID: CGWindowID = 0
     nonisolated(unsafe) private var appPID: pid_t = 0
@@ -29,6 +36,7 @@ final class InputGuard: NSObject {
     nonisolated(unsafe) private var menuBarThreshold: CGFloat = 50
 
     nonisolated(unsafe) var onUnlockHotkey: (() -> Void)?
+    nonisolated(unsafe) var onEmergencyExit: (() -> Void)?
     nonisolated(unsafe) var onKeyboardIntrusion: (() -> Void)?
     nonisolated(unsafe) var onPointerIntrusion: (() -> Void)?
 
@@ -49,14 +57,30 @@ final class InputGuard: NSObject {
     var isLocked: Bool { tapRef != nil }
 
     @discardableResult
-    func install(overlayWindow: NSWindow, unlock: HotkeyCombo) -> Bool {
+    func install(
+        overlayWindow: NSWindow,
+        unlock: HotkeyCombo,
+        emergencyExit: (enabled: Bool, combo: HotkeyCombo)? = nil,
+        watchTapUnlock: Bool = false
+    ) -> Bool {
         guard tapRef == nil else { return true }
 
         overlayWindowID = CGWindowID(overlayWindow.windowNumber)
         appPID = pid_t(ProcessInfo.processInfo.processIdentifier)
         menuBarThreshold = NSStatusBar.system.thickness + 8
+
         unlockKeyCode = Int64(unlock.keyCode)
         unlockFlags = unlock.cgEventFlags
+
+        if let emergency = emergencyExit {
+            emergencyExitEnabled = emergency.enabled
+            emergencyExitKeyCode = Int64(emergency.combo.keyCode)
+            emergencyExitFlags = emergency.combo.cgEventFlags
+        } else {
+            emergencyExitEnabled = false
+        }
+
+        appleWatchTapUnlock = watchTapUnlock
 
         let kTabletPointer: UInt32 = 23
         let kTabletProximity: UInt32 = 24
@@ -110,8 +134,22 @@ final class InputGuard: NSObject {
         unlockFlags = combo.cgEventFlags
     }
 
+    func setEmergencyExit(enabled: Bool, combo: HotkeyCombo) {
+        emergencyExitEnabled = enabled
+        emergencyExitKeyCode = Int64(combo.keyCode)
+        emergencyExitFlags = combo.cgEventFlags
+    }
+
+    func setAppleWatchTapUnlock(enabled: Bool) {
+        appleWatchTapUnlock = enabled
+    }
+
     func registerSecondaryOverlay(_ id: CGWindowID) {
         secondaryOverlayIDs.insert(id)
+    }
+
+    func clearSecondaryOverlays() {
+        secondaryOverlayIDs.removeAll()
     }
 
     func uninstall() {
@@ -145,12 +183,35 @@ final class InputGuard: NSObject {
         if type == .keyDown {
             let keycode = event.getIntegerValueField(.keyboardEventKeycode)
             let masked = event.flags.intersection(HotkeyCombo.realModifierMask)
+
+            // Check emergency exit
+            if emergencyExitEnabled && keycode == emergencyExitKeyCode && masked == emergencyExitFlags {
+                if let cb = onEmergencyExit {
+                    Task { @MainActor in cb() }
+                }
+                return nil
+            }
+
+            // Check unlock hotkey
             if keycode == unlockKeyCode && masked == unlockFlags {
                 if let cb = onUnlockHotkey {
                     Task { @MainActor in cb() }
                 }
                 return nil
             }
+
+            // Tap to unlock with Apple Watch (rate-limited)
+            if appleWatchTapUnlock {
+                let now = CACurrentMediaTime()
+                if now - lastWatchPromptTime > 5.0 {
+                    lastWatchPromptTime = now
+                    if let cb = onUnlockHotkey {
+                        Task { @MainActor in cb() }
+                    }
+                    return nil
+                }
+            }
+
             fireKeyboardIntrusion()
             return nil
         }
@@ -171,7 +232,7 @@ final class InputGuard: NSObject {
                       type == .rightMouseDown || type == .rightMouseUp ||
                       type == .scrollWheel
         let isMove = type == .mouseMoved || type == .leftMouseDragged ||
-                     type == .rightMouseDragged || type == .otherMouseDragged
+                      type == .rightMouseDragged || type == .otherMouseDragged
 
         if isMove && loc.y < menuBarThreshold {
             return Unmanaged.passRetained(event)
@@ -179,6 +240,18 @@ final class InputGuard: NSObject {
 
         if isMouse && pointHitsWhitelistedWindow(loc) {
             return Unmanaged.passRetained(event)
+        }
+
+        // Tap on mouse / trackpad with Apple Watch tap unlock
+        if isMouse && appleWatchTapUnlock {
+            let now = CACurrentMediaTime()
+            if now - lastWatchPromptTime > 5.0 {
+                lastWatchPromptTime = now
+                if let cb = onUnlockHotkey {
+                    Task { @MainActor in cb() }
+                }
+                return nil
+            }
         }
 
         let now = CACurrentMediaTime()
