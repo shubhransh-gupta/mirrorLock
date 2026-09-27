@@ -82,27 +82,27 @@ final class InputGuard: NSObject {
 
         appleWatchTapUnlock = watchTapUnlock
 
-        let kTabletPointer: UInt32 = 23
-        let kTabletProximity: UInt32 = 24
-        let kSystemDefined: UInt32 = 14
-        let mask: CGEventMask =
-            (1 << CGEventType.keyDown.rawValue) |
-            (1 << CGEventType.keyUp.rawValue) |
-            (1 << CGEventType.flagsChanged.rawValue) |
-            (1 << CGEventType.leftMouseDown.rawValue) |
-            (1 << CGEventType.leftMouseUp.rawValue) |
-            (1 << CGEventType.leftMouseDragged.rawValue) |
-            (1 << CGEventType.rightMouseDown.rawValue) |
-            (1 << CGEventType.rightMouseUp.rawValue) |
-            (1 << CGEventType.rightMouseDragged.rawValue) |
-            (1 << CGEventType.mouseMoved.rawValue) |
-            (1 << CGEventType.otherMouseDown.rawValue) |
-            (1 << CGEventType.otherMouseUp.rawValue) |
-            (1 << CGEventType.otherMouseDragged.rawValue) |
-            (1 << CGEventType.scrollWheel.rawValue) |
-            (1 << kTabletPointer) |
-            (1 << kTabletProximity) |
-            (1 << kSystemDefined)
+        var mask: CGEventMask = 0
+        let eventTypes: [CGEventType] = [
+            .keyDown, .keyUp, .flagsChanged,
+            .leftMouseDown, .leftMouseUp, .leftMouseDragged,
+            .rightMouseDown, .rightMouseUp, .rightMouseDragged,
+            .mouseMoved,
+            .otherMouseDown, .otherMouseUp, .otherMouseDragged,
+            .scrollWheel
+        ]
+        for type in eventTypes {
+            mask |= (1 << UInt64(type.rawValue))
+        }
+
+        let rawEventCodes: [UInt32] = [
+            14, // kSystemDefined
+            23, // kTabletPointer
+            24  // kTabletProximity
+        ]
+        for code in rawEventCodes {
+            mask |= (1 << UInt64(code))
+        }
 
         let refcon = Unmanaged.passUnretained(self).toOpaque()
         guard let tap = CGEvent.tapCreate(
