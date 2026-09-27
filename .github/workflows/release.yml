@@ -4,16 +4,28 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   build-and-release:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Select Xcode 16+
+        run: |
+          for xc in /Applications/Xcode_16*.app /Applications/Xcode_17*.app /Applications/Xcode.app; do
+            if [[ -d "$xc/Contents/Developer" ]]; then
+              sudo xcode-select -s "$xc/Contents/Developer"
+              echo "Selected $xc"
+              break
+            fi
+          done
+          xcodebuild -version
 
       - name: Build release packages (ZIP, PKG, and Homebrew Cask)
         run: |

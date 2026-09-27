@@ -4,8 +4,13 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-if [[ -d "/Applications/Xcode.app/Contents/Developer" ]]; then
-  export DEVELOPER_DIR="/Applications/Xcode.app/Contents/Developer"
+if [[ -z "${DEVELOPER_DIR:-}" ]]; then
+  for xc in /Applications/Xcode_16*.app /Applications/Xcode_17*.app /Applications/Xcode.app; do
+    if [[ -d "$xc/Contents/Developer" ]]; then
+      export DEVELOPER_DIR="$xc/Contents/Developer"
+      break
+    fi
+  done
 fi
 
 XCODEBUILD="${DEVELOPER_DIR:+$DEVELOPER_DIR/usr/bin/}xcodebuild"
