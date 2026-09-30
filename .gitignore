@@ -16,3 +16,8 @@ xcuserdata/
 .build/
 Packages/
 Package.resolved
+
+# Claude & Agent temp files
+.claude/
+*.backup*
+

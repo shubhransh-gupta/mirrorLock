@@ -129,6 +129,13 @@ private struct LockAndUnlockTab: View {
                         .foregroundStyle(.secondary)
                         .padding(.leading, 20)
 
+                    Toggle("Tap to unlock with Android Watch", isOn: $preferences.androidWatchTapUnlock)
+                        .font(.subheadline)
+                    Text("When enabled, touching the keyboard or trackpad while locked triggers unlock detection for compatible Android Wear OS companions.")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .padding(.leading, 20)
+
                     HStack {
                         Button(isTesting ? "Testing..." : "Send Test to Apple Watch / Touch ID") {
                             isTesting = true

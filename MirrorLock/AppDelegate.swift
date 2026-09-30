@@ -31,9 +31,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
         setupHotkeys()
         setupSleepAndDisplayHandlers()
         setupIdleMonitoring()
-
-        if !lockState.allPermissionsReady {
-            showPreferences()
+        
+        // Delay permission check slightly to ensure system has settled after update
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let self = self else { return }
+            if !self.lockState.allPermissionsReady {
+                self.showPreferences()
+            }
         }
     }
 
@@ -197,6 +201,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation, NSMenu
                 combo: Preferences.shared.emergencyExitHotkey
             )
             guard_.setAppleWatchTapUnlock(enabled: Preferences.shared.appleWatchTapUnlock)
+            guard_.setAndroidWatchTapUnlock(enabled: Preferences.shared.androidWatchTapUnlock)
         }
     }
 

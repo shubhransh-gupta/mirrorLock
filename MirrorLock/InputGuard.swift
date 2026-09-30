@@ -29,6 +29,7 @@ final class InputGuard: NSObject {
     nonisolated(unsafe) private var emergencyExitFlags: CGEventFlags = HotkeyCombo.emergencyExitDefault.cgEventFlags
 
     nonisolated(unsafe) private var appleWatchTapUnlock: Bool = false
+    nonisolated(unsafe) private var androidWatchTapUnlock: Bool = false
 
     nonisolated(unsafe) private var overlayWindowID: CGWindowID = 0
     nonisolated(unsafe) private var appPID: pid_t = 0
@@ -80,7 +81,11 @@ final class InputGuard: NSObject {
             emergencyExitEnabled = false
         }
 
-        appleWatchTapUnlock = watchTapUnlock
+        // For backward compatibility, we'll assume the watchTapUnlock parameter
+        // refers to Apple Watch unlock. In a future version, we might want to
+        // separate these parameters.
+        self.appleWatchTapUnlock = watchTapUnlock
+        // Android watch unlock is controlled separately via preferences
 
         var mask: CGEventMask = 0
         let eventTypes: [CGEventType] = [
@@ -144,6 +149,10 @@ final class InputGuard: NSObject {
         appleWatchTapUnlock = enabled
     }
 
+    func setAndroidWatchTapUnlock(enabled: Bool) {
+        androidWatchTapUnlock = enabled
+    }
+
     func registerSecondaryOverlay(_ id: CGWindowID) {
         secondaryOverlayIDs.insert(id)
     }
@@ -200,8 +209,8 @@ final class InputGuard: NSObject {
                 return nil
             }
 
-            // Tap to unlock with Apple Watch (rate-limited)
-            if appleWatchTapUnlock {
+            // Tap to unlock with Apple Watch or Android Watch (rate-limited)
+            if appleWatchTapUnlock || androidWatchTapUnlock {
                 let now = CACurrentMediaTime()
                 if now - lastWatchPromptTime > 5.0 {
                     lastWatchPromptTime = now
@@ -242,8 +251,8 @@ final class InputGuard: NSObject {
             return Unmanaged.passRetained(event)
         }
 
-        // Tap on mouse / trackpad with Apple Watch tap unlock
-        if isMouse && appleWatchTapUnlock {
+        // Tap on mouse / trackpad with Apple Watch or Android Watch tap unlock
+        if isMouse && (appleWatchTapUnlock || androidWatchTapUnlock) {
             let now = CACurrentMediaTime()
             if now - lastWatchPromptTime > 5.0 {
                 lastWatchPromptTime = now

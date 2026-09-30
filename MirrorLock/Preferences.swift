@@ -10,6 +10,7 @@ final class Preferences: ObservableObject {
         static let launchAtLogin = "launchAtLogin"
         static let autoLockIdleMinutes = "autoLockIdleMinutes"
         static let appleWatchTapUnlock = "appleWatchTapUnlock"
+        static let androidWatchTapUnlock = "androidWatchTapUnlock"
         static let blackoutSecondaryScreens = "blackoutSecondaryScreens"
         static let activateHotkey = "activateHotkey"
         static let unlockHotkey = "unlockHotkey"
@@ -34,6 +35,10 @@ final class Preferences: ObservableObject {
 
     @Published var appleWatchTapUnlock: Bool {
         didSet { UserDefaults.standard.set(appleWatchTapUnlock, forKey: Keys.appleWatchTapUnlock) }
+    }
+
+    @Published var androidWatchTapUnlock: Bool {
+        didSet { UserDefaults.standard.set(androidWatchTapUnlock, forKey: Keys.androidWatchTapUnlock) }
     }
 
     @Published var blackoutSecondaryScreens: Bool {
@@ -91,6 +96,7 @@ final class Preferences: ObservableObject {
         self.launchAtLogin = LaunchAtLoginManager.isEnabled
         self.autoLockIdleMinutes = defaults.integer(forKey: Keys.autoLockIdleMinutes)
         self.appleWatchTapUnlock = defaults.bool(forKey: Keys.appleWatchTapUnlock)
+        self.androidWatchTapUnlock = defaults.bool(forKey: Keys.androidWatchTapUnlock)
         self.blackoutSecondaryScreens = defaults.bool(forKey: Keys.blackoutSecondaryScreens)
         self.emergencyExitEnabled = defaults.bool(forKey: Keys.emergencyExitEnabled)
 

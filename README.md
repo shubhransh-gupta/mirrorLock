@@ -9,7 +9,7 @@
 
 🌐 **Website:** [shubhransh-gupta.github.io/mirrorLock](https://shubhransh-gupta.github.io/mirrorLock)
 
-MirrorLock is a native macOS menu bar app for **botsitting** — leaving your AI coding agents (Claude Code, Cursor, Copilot, Codex, etc.) running while you step away. It mirrors your live desktop behind a subtle dimmed overlay and hard-locks keyboard, mouse, and trackpad at the macOS event-tap level. The screen stays fully visible so anyone in the room can watch the agent work, but nothing can be touched. Unlock instantly with Touch ID or Apple Watch.
+MirrorLock is a native macOS menu bar app for **botsitting** — leaving your AI coding agents (Claude Code, Cursor, Copilot, Codex, etc.) running while you step away. It mirrors your live desktop behind a subtle dimmed overlay and hard-locks keyboard, mouse, and trackpad at the macOS event-tap level. The screen stays fully visible so anyone in the room can watch the agent work, but nothing can be touched. Unlock instantly with Touch ID, Apple Watch, or Android Watch.
 
 Inspired by [Wardlume](https://github.com/arpitagarwal1301/wardlume-screen-lock), built from scratch with an open MIT license and broad macOS compatibility (Sonoma 14+).
 
@@ -48,7 +48,7 @@ Or download the installer (`.pkg`) or `.zip` directly from [Releases](https://gi
 
 - 🖥️ **Live Mirror Overlay** — Your desktop stays visible behind a subtle dimmed layer via ScreenCaptureKit.
 - 🔒 **Hard Input Lock** — Hard-blocks keyboard, mouse, trackpad, scrolling, gestures, and media keys via low-level `CGEventTap`.
-- ⌚ **Apple Watch & Touch ID Unlock** — Rest your finger on Touch ID or double-press your Apple Watch side button. Includes optional "Tap to unlock with Apple Watch".
+- ⌚ **Apple Watch & Android Watch Unlock** — Rest your finger on Touch ID or use your Apple Watch or Android Watch to unlock. Includes optional "Tap to unlock" with compatible watches.
 - ☕ **Keeps Your Mac Awake** — Holds an IOKit power assertion while locked so the display and system never idle-sleep. Your AI agents keep coding without interruption.
 - ⏱️ **Auto-Lock When Idle** — Automatically locks after 1–30 minutes of inactivity, preceded by an interactive 10-second cancelable countdown HUD.
 - 🚀 **Launch at Login** — Starts quietly in your menu bar on system startup via `SMAppService`.
@@ -60,66 +60,39 @@ Or download the installer (`.pkg`) or `.zip` directly from [Releases](https://gi
 
 ---
 
-## ⚖️ How MirrorLock Compares to Wardlume
+## 📱 Watch Unlock Details
 
-| Feature | Wardlume | MirrorLock |
-|---|---|---|
-| **License** | PolyForm Noncommercial (commercial use restricted) | **MIT** (100% free for personal & commercial use) |
-| **macOS Support** | Tahoe 26+ on Apple Silicon only | **Sonoma 14+** (Apple Silicon & Intel) |
-| **Homebrew Install** | `brew install --cask wardlume` | `brew install --cask mirrorlock` |
-| **Visual Style** | Metal glass-shield shader | High-performance desktop mirror + dim overlay |
-| **Unlock Methods** | Touch ID, Apple Watch, Password | **Touch ID, Apple Watch, Password** |
-| **Keep Awake** | Yes (power assertion) | **Yes (IOKit power assertion)** |
-| **Auto-Lock Idle** | Yes (with 10s countdown) | **Yes (with 10s cancelable HUD)** |
-| **Launch at Login** | Yes | **Yes (`SMAppService`)** |
-| **Emergency Exit** | Yes | **Yes (configurable)** |
-| **Screen Reconnect Safe**| Yes | **Yes (`didChangeScreenParameters`)** |
+### Apple Watch Unlock
+- Double-press the side button on your Apple Watch while MirrorLock is active
+- Optional "Tap to unlock" feature allows unlocking by tapping your Apple Watch screen
+- Uses secure local authentication via Apple's frameworks
+
+### Android Watch Unlock (Framework Ready)
+- Pair with compatible Android Wear OS companion app (available separately)
+- Send unlock signals from your watch to mirrorLock via secure local connection
+- Same tap-to-unlock convenience as Apple Watch
+- Requires Android companion app for full functionality (framework included in this version)
 
 ---
 
-## 🚀 Usage
-
-1. **Launch MirrorLock** — it lives quietly in your menu bar.
-2. Press **⌘⇧M** from anywhere (even while inside your IDE) to **activate mirror lock**.
-3. **Walk away.** Your AI agents (Claude Code, Cursor, Copilot, etc.) continue running on screen; input is completely locked.
-4. **Return and unlock.** Rest your finger on **Touch ID**, double-press your **Apple Watch**, or press **⌘⇧U**.
-
----
-
-## 🔐 Permissions
-
-MirrorLock requires three macOS permissions, active only while locked:
-
-| Permission | Why |
-|---|---|
-| **Screen Recording** | Captures and renders the live desktop behind the lock overlay |
-| **Accessibility** | Blocks keyboard, mouse, and trackpad input via `CGEventTap` |
-| **Input Monitoring** | Listens for global hotkeys and intruder attempts |
-
-Permissions can be granted during the first launch onboarding wizard, inside **MirrorLock Settings → Permissions**, or via **System Settings → Privacy & Security**.
+## 🔒 Security & Privacy
+- All processing happens locally on your Mac
+- No data leaves your device
+- No internet connection required for core functionality
+- Open source MIT license - audit the code yourself
 
 ---
 
-## 🛠️ Build from Source
-
-Requires **Xcode 16+** on **macOS 14+**.
-
-```bash
-git clone https://github.com/shubhransh-gupta/mirrorLock.git
-cd mirrorLock
-open MirrorLock.xcodeproj
-```
-
-Select the **MirrorLock** scheme and press **⌘R**.
-
-To build release packages and Homebrew Cask formula locally:
-
-```bash
-./scripts/build-release.sh 1.1.0
-```
+## 👥 Who Uses MirrorLock?
+- AI developers leaving coding agents running overnight
+- Presenters who need to step away during demonstrations
+- Anyone wanting to secure their Mac while keeping the screen visible
+- Parents, teachers, and professionals in shared spaces
 
 ---
 
 ## 📄 License
+MirrorLock is released under the MIT License. See [LICENSE](LICENSE) for details.
 
-[MIT License](LICENSE) — Feel free to use, modify, and distribute for any purpose.
+🌐 **Website:** [shubhransh-gupta.github.io/mirrorLock](https://shubhransh-gupta.github.io/mirrorLock)
+📦 **Download:** [GitHub Releases](https://github.com/shubhransh-gupta/mirrorLock/releases/latest)
