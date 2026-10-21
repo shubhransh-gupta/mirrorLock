@@ -754,6 +754,11 @@ body {
   position: relative;
 }
 
+.install-left, .install-right {
+  min-width: 0;
+  max-width: 100%;
+}
+
 .install-left h2 {
   font-size: 2.2rem;
   font-weight: 700;
@@ -831,6 +836,8 @@ kbd {
 
 .install-pane {
   display: none;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .install-pane.active {
@@ -853,14 +860,27 @@ kbd {
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 14px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .code-box pre {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   color: #a5b4fc;
-  overflow-x: auto;
+  min-width: 0;
+  flex: 1;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+.code-box pre code {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .copy-btn {

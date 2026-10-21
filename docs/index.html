@@ -335,8 +335,9 @@
             <div id="pane-curl" class="install-pane">
               <p class="pane-text">Automated unattended installer script:</p>
               <div class="code-box">
-                <pre><code>curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh | bash</code></pre>
-                <button class="copy-btn" type="button">Copy</button>
+                <pre><code id="curl-cmd">curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh \
+  | bash</code></pre>
+                <button class="copy-btn" data-copy-target="curl-cmd" type="button">Copy</button>
               </div>
             </div>
 
@@ -369,7 +370,7 @@
     <footer class="site-footer">
       <div class="footer-inner">
         <p class="footer-credits">
-          &copy; <span id="year">2026</span> shubhransh-gupta. Released under the open-source MIT License.
+          Created with love ❤️ by Shubhransh Gupta &bull; &copy; <span id="year">2026</span> MirrorLock. Released under the open-source MIT License.
         </p>
         <div class="social-pill-group">
           <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener" class="social-circle-btn" title="GitHub Repository" aria-label="GitHub">
