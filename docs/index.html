@@ -136,8 +136,8 @@
           </div>
 
           <div class="hero-homebrew-bar">
-            <span class="brew-code" id="hero-brew-cmd">brew install --cask shubhransh-gupta/tap/mirrorlock</span>
-            <button class="copy-mini-btn" data-copy-target="hero-brew-cmd" type="button">Copy</button>
+            <span class="brew-code" id="hero-curl-cmd">curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh | bash</span>
+            <button class="copy-mini-btn" data-copy-target="hero-curl-cmd" type="button">Copy</button>
           </div>
         </div>
 
@@ -286,6 +286,65 @@
         </div>
       </section>
 
+      <!-- Dedicated Watch Unlock Section -->
+      <section id="unlock" class="unlock-section">
+        <div class="section-label" style="text-align: center;">Convenient Biometrics</div>
+        <h2 class="section-headline" style="text-align: center;">Watch &amp; Touch ID Unlock Details</h2>
+        <p style="text-align: center; color: var(--text-muted); max-width: 620px; margin: 0 auto 40px;">
+          Seamlessly unlock MirrorLock from your wrist or keyboard without having to enter passwords or wake your macOS lock screen.
+        </p>
+
+        <div class="unlock-grid-3">
+          <div class="unlock-card">
+            <div class="unlock-icon-badge">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg>
+            </div>
+            <span class="card-badge">Apple WatchKit</span>
+            <h3>Apple Watch Unlock</h3>
+            <p>
+              Double-press the side crown button on your Apple Watch while MirrorLock is active to unlock instantly. Includes an optional "Tap to unlock" feature to unlock simply by tapping your watch screen.
+            </p>
+            <ul class="card-feature-list">
+              <li>Side button double-tap</li>
+              <li>Optional wrist tap-to-unlock</li>
+              <li>Apple native LocalAuthentication</li>
+            </ul>
+          </div>
+
+          <div class="unlock-card">
+            <div class="unlock-icon-badge">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3" ry="3"/><circle cx="12" cy="18" r="1"/><line x1="8" y1="5" x2="16" y2="5"/></svg>
+            </div>
+            <span class="card-badge">Android Wear OS</span>
+            <h3>Android Watch Unlock</h3>
+            <p>
+              Built-in support for Android Wear OS smartwatches. Transmit secure unlock signals from your watch to MirrorLock over a local encrypted network broadcast with the companion framework.
+            </p>
+            <ul class="card-feature-list">
+              <li>Encrypted local LAN connection</li>
+              <li>Same tap-to-unlock convenience</li>
+              <li>Zero cloud relays required</li>
+            </ul>
+          </div>
+
+          <div class="unlock-card">
+            <div class="unlock-icon-badge">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 4"/><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"/><path d="M17.29 21.02c.12-.54.41-1.65.71-3.02"/><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/><path d="M8.65 22c.21-.66.45-1.32.57-2"/><path d="M14 13.12c0 2.38 0 6.38-1 8.88"/><path d="M2 16h.01"/><path d="M21.8 16c.2-2 .131-5.354 0-6"/><path d="M9 6.8a6 6 0 0 1 9 5.2v2"/></svg>
+            </div>
+            <span class="card-badge">Apple Secure Enclave</span>
+            <h3>Touch ID Sensor</h3>
+            <p>
+              Rest your finger on your Mac's built-in Touch ID sensor for immediate biometric authentication. Operates seamlessly through Apple's hardware Secure Enclave.
+            </p>
+            <ul class="card-feature-list">
+              <li>Instant biometric verification</li>
+              <li>Zero password prompts</li>
+              <li>Hardware-level enclave security</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <!-- Installation Container (Matching the Figma Contact Box) -->
       <section id="install" class="install-section">
         <div class="install-glass-box">
@@ -314,14 +373,27 @@
 
           <div class="install-right">
             <div class="install-tab-nav" role="tablist">
-              <button class="install-tab-btn active" data-tab="brew" type="button">Homebrew</button>
-              <button class="install-tab-btn" data-tab="curl" type="button">Curl Oneliner</button>
+              <button class="install-tab-btn active" data-tab="curl" type="button">Curl (Recommended)</button>
+              <button class="install-tab-btn" data-tab="brew" type="button">Homebrew</button>
               <button class="install-tab-btn" data-tab="direct" type="button">Direct Downloads</button>
             </div>
 
-            <!-- Homebrew Pane -->
-            <div id="pane-brew" class="install-pane active">
-              <p class="pane-text">Recommended single-line installation:</p>
+            <!-- Curl Pane (1st Preference) -->
+            <div id="pane-curl" class="install-pane active">
+              <p class="pane-text">Recommended single-line installation (auto-installs &amp; sets up cleanly):</p>
+              <div class="code-box">
+                <pre><code id="curl-cmd">curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh \
+  | bash</code></pre>
+                <button class="copy-btn" data-copy-target="curl-cmd" type="button">Copy</button>
+              </div>
+              <p class="pane-text" style="font-size: 0.8rem; color: var(--text-dim);">
+                Places the signed app directly into <code>/Applications</code> with zero Gatekeeper warnings.
+              </p>
+            </div>
+
+            <!-- Homebrew Pane (2nd Preference) -->
+            <div id="pane-brew" class="install-pane">
+              <p class="pane-text">Homebrew cask installation:</p>
               <div class="code-box">
                 <pre><code>brew install --cask shubhransh-gupta/tap/mirrorlock</code></pre>
                 <button class="copy-btn" type="button">Copy</button>
@@ -331,17 +403,7 @@
               </p>
             </div>
 
-            <!-- Curl Pane -->
-            <div id="pane-curl" class="install-pane">
-              <p class="pane-text">Automated unattended installer script:</p>
-              <div class="code-box">
-                <pre><code id="curl-cmd">curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh \
-  | bash</code></pre>
-                <button class="copy-btn" data-copy-target="curl-cmd" type="button">Copy</button>
-              </div>
-            </div>
-
-            <!-- Direct Download Pane -->
+            <!-- Direct Download Pane (3rd Preference) -->
             <div id="pane-direct" class="install-pane">
               <p class="pane-text">Standalone packages from GitHub Releases:</p>
               <div class="direct-downloads-grid">
@@ -385,6 +447,31 @@
         </div>
       </div>
     </footer>
+  </div>
+
+  <!-- Modal Prompt for Direct Downloads (Forces/Prompts Curl preference) -->
+  <div id="curl-prompt-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-glass-card">
+      <button id="modal-close-btn" class="modal-close" type="button" aria-label="Close modal">&times;</button>
+      <div class="modal-icon-badge">⚡</div>
+      <h3 id="modal-title" class="modal-title">Recommended: Install via Curl</h3>
+      <p class="modal-desc">
+        Direct downloads require manual security overrides and do not receive automatic updates. We strongly recommend running our official 1-line script to install MirrorLock cleanly into <code>/Applications</code>:
+      </p>
+      <div class="code-box modal-code-box">
+        <pre><code id="modal-curl-cmd">curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh \
+  | bash</code></pre>
+        <button id="modal-copy-btn" class="copy-btn" data-copy-target="modal-curl-cmd" type="button">Copy</button>
+      </div>
+      <div class="modal-actions">
+        <button id="modal-prefer-curl-btn" class="btn-pill-gradient" type="button" style="width: 100%; justify-content: center;">
+          <span>✓ Switch to Curl Installer</span>
+        </button>
+        <button id="modal-bypass-download-link" class="modal-bypass-link" type="button">
+          Skip and continue direct download anyway →
+        </button>
+      </div>
+    </div>
   </div>
 
   <script src="app.js"></script>
