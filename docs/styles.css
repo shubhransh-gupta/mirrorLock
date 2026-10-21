@@ -744,19 +744,27 @@ body {
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--border-glass);
   border-radius: 28px;
-  padding: 48px;
+  padding: 44px;
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 48px;
+  grid-template-columns: 340px 1fr;
+  gap: 40px;
   box-shadow: 
     0 24px 60px rgba(0, 0, 0, 0.5),
     0 0 40px rgba(99, 102, 241, 0.15);
   position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-.install-left, .install-right {
+.install-left {
   min-width: 0;
   max-width: 100%;
+}
+
+.install-right {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .install-left h2 {
@@ -776,18 +784,31 @@ body {
   background: rgba(11, 14, 32, 0.6);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 16px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .shortcut-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   font-size: 0.88rem;
   color: var(--text-muted);
+}
+
+.shortcut-label {
+  white-space: nowrap;
+}
+
+.shortcut-keys {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 kbd {
@@ -798,6 +819,7 @@ kbd {
   border-radius: 6px;
   font-family: var(--font-mono);
   font-size: 0.8rem;
+  white-space: nowrap;
 }
 
 /* Install Right: Tabs & Code Box */
@@ -862,24 +884,27 @@ kbd {
   margin-bottom: 14px;
   min-width: 0;
   max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .code-box pre {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.86rem;
+  font-size: 0.85rem;
   color: #a5b4fc;
   min-width: 0;
   flex: 1;
   white-space: pre-wrap;
-  word-break: break-word;
+  word-break: break-all;
   overflow-wrap: anywhere;
   line-height: 1.5;
+  overflow-x: hidden;
 }
 
 .code-box pre code {
   white-space: pre-wrap;
-  word-break: break-word;
+  word-break: break-all;
   overflow-wrap: anywhere;
 }
 

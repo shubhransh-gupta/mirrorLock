@@ -357,16 +357,16 @@
 
             <div class="shortcut-spec-box">
               <div class="shortcut-row">
-                <span>Default Lock Hotkey</span>
-                <div><kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>M</kbd></div>
+                <span class="shortcut-label">Default Lock Hotkey</span>
+                <div class="shortcut-keys"><kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>M</kbd></div>
               </div>
               <div class="shortcut-row">
-                <span>Default Unlock Hotkey</span>
-                <div><kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>U</kbd></div>
+                <span class="shortcut-label">Default Unlock Hotkey</span>
+                <div class="shortcut-keys"><kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>U</kbd></div>
               </div>
               <div class="shortcut-row">
-                <span>Emergency Escape Key</span>
-                <div><kbd>⌃</kbd> <kbd>⌥</kbd> <kbd>⌘</kbd> <kbd>Esc</kbd></div>
+                <span class="shortcut-label">Emergency Escape Key</span>
+                <div class="shortcut-keys"><kbd>⌃</kbd> <kbd>⌥</kbd> <kbd>⌘</kbd> <kbd>Esc</kbd></div>
               </div>
             </div>
           </div>
@@ -382,9 +382,9 @@
             <div id="pane-curl" class="install-pane active">
               <p class="pane-text">Recommended single-line installation (auto-installs &amp; sets up cleanly):</p>
               <div class="code-box">
-                <pre><code id="curl-cmd">curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh \
-  | bash</code></pre>
-                <button class="copy-btn" data-copy-target="curl-cmd" type="button">Copy</button>
+                <pre><code id="curl-cmd">curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/\
+  main/scripts/install.sh | bash</code></pre>
+                <button class="copy-btn" data-copy-target="curl-cmd" data-copy-raw="curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh | bash" type="button">Copy</button>
               </div>
               <p class="pane-text" style="font-size: 0.8rem; color: var(--text-dim);">
                 Places the signed app directly into <code>/Applications</code> with zero Gatekeeper warnings.
@@ -459,9 +459,9 @@
         Direct downloads require manual security overrides and do not receive automatic updates. We strongly recommend running our official 1-line script to install MirrorLock cleanly into <code>/Applications</code>:
       </p>
       <div class="code-box modal-code-box">
-        <pre><code id="modal-curl-cmd">curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh \
-  | bash</code></pre>
-        <button id="modal-copy-btn" class="copy-btn" data-copy-target="modal-curl-cmd" type="button">Copy</button>
+        <pre><code id="modal-curl-cmd">curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/\
+  main/scripts/install.sh | bash</code></pre>
+        <button id="modal-copy-btn" class="copy-btn" data-copy-target="modal-curl-cmd" data-copy-raw="curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh | bash" type="button">Copy</button>
       </div>
       <div class="modal-actions">
         <button id="modal-prefer-curl-btn" class="btn-pill-gradient" type="button" style="width: 100%; justify-content: center;">

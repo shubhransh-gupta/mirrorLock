@@ -64,11 +64,12 @@
 
     copyBtns.forEach(btn => {
       btn.addEventListener('click', async () => {
+        const rawText = btn.getAttribute('data-copy-raw');
         const targetId = btn.getAttribute('data-copy-target');
         const codeEl = targetId ? document.getElementById(targetId) : btn.closest('.code-box')?.querySelector('code');
-        if (!codeEl) return;
+        const text = rawText || (codeEl ? codeEl.textContent.trim() : '');
+        if (!text) return;
 
-        const text = codeEl.textContent.trim();
         try {
           await navigator.clipboard.writeText(text);
           const originalHTML = btn.innerHTML;
