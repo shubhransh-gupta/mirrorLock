@@ -20,14 +20,6 @@
       tabs.forEach((tab, i) => {
         tab.classList.toggle('active', i === index);
       });
-
-      // If user specifically clicked the "Watch Unlock" tab, scroll them to the detailed section
-      if (index === 2) {
-        const unlockSec = document.getElementById('unlock');
-        if (unlockSec) {
-          unlockSec.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
     }
 
     tabs.forEach((tab, i) => {
@@ -88,13 +80,14 @@
     });
   }
 
-  // --- Direct Download Interception (Force/Prompt Curl preference) ---
+  // --- Direct Download Interception (Promote Curl & Homebrew) ---
   function setupDirectDownloadInterception() {
     const modal = document.getElementById('curl-prompt-modal');
     if (!modal) return;
 
     const closeBtn = document.getElementById('modal-close-btn');
     const preferCurlBtn = document.getElementById('modal-prefer-curl-btn');
+    const preferBrewBtn = document.getElementById('modal-prefer-brew-btn');
     const bypassLink = document.getElementById('modal-bypass-download-link');
     const directLinks = document.querySelectorAll('.direct-link-card');
 
@@ -131,37 +124,57 @@
       }
     });
 
+    // Option 1: Prefer Curl
     if (preferCurlBtn) {
       preferCurlBtn.addEventListener('click', async () => {
-        // 1. Switch to curl tab in installation box
         const curlTab = document.querySelector('.install-tab-btn[data-tab="curl"]');
         if (curlTab) curlTab.click();
 
-        // 2. Scroll to install section
         const installSec = document.getElementById('install');
         if (installSec) {
           installSec.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // 3. Copy curl command to clipboard
-        const curlCode = document.getElementById('curl-cmd') || document.getElementById('modal-curl-cmd');
-        if (curlCode) {
-          try {
-            await navigator.clipboard.writeText(curlCode.textContent.trim());
-            preferCurlBtn.innerHTML = '<span>✓ Copied to Clipboard!</span>';
-            setTimeout(() => {
-              preferCurlBtn.innerHTML = '<span>✓ Switch to Curl Installer</span>';
-              closeModal();
-            }, 1000);
-          } catch (err) {
+        const curlCmd = 'curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh | bash';
+        try {
+          await navigator.clipboard.writeText(curlCmd);
+          preferCurlBtn.innerHTML = '<span>✓ Copied! Switching...</span>';
+          setTimeout(() => {
+            preferCurlBtn.innerHTML = '<span>⚡ Copy Curl Command &amp; Run</span>';
             closeModal();
-          }
-        } else {
+          }, 800);
+        } catch (err) {
           closeModal();
         }
       });
     }
 
+    // Option 2: Prefer Homebrew
+    if (preferBrewBtn) {
+      preferBrewBtn.addEventListener('click', async () => {
+        const brewTab = document.querySelector('.install-tab-btn[data-tab="brew"]');
+        if (brewTab) brewTab.click();
+
+        const installSec = document.getElementById('install');
+        if (installSec) {
+          installSec.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        const brewCmd = 'brew install --cask shubhransh-gupta/tap/mirrorlock';
+        try {
+          await navigator.clipboard.writeText(brewCmd);
+          preferBrewBtn.innerHTML = '<span>✓ Copied! Switching...</span>';
+          setTimeout(() => {
+            preferBrewBtn.innerHTML = '<span>🍺 Copy Homebrew Command</span>';
+            closeModal();
+          }, 800);
+        } catch (err) {
+          closeModal();
+        }
+      });
+    }
+
+    // Option 3: Continue direct download
     if (bypassLink) {
       bypassLink.addEventListener('click', (e) => {
         e.preventDefault();

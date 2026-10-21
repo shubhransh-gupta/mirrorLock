@@ -449,26 +449,24 @@
     </footer>
   </div>
 
-  <!-- Modal Prompt for Direct Downloads (Forces/Prompts Curl preference) -->
+  <!-- Modal Prompt for Direct Downloads (Promotes Curl & Homebrew) -->
   <div id="curl-prompt-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-glass-card">
       <button id="modal-close-btn" class="modal-close" type="button" aria-label="Close modal">&times;</button>
       <div class="modal-icon-badge">⚡</div>
-      <h3 id="modal-title" class="modal-title">Recommended: Install via Curl</h3>
+      <h3 id="modal-title" class="modal-title">Prefer Automated Installation?</h3>
       <p class="modal-desc">
-        Direct downloads require manual security overrides and do not receive automatic updates. We strongly recommend running our official 1-line script to install MirrorLock cleanly into <code>/Applications</code>:
+        Direct downloads require manual security approvals and do not update automatically. We recommend installing via <strong>Curl</strong> or <strong>Homebrew</strong>:
       </p>
-      <div class="code-box modal-code-box">
-        <pre><code id="modal-curl-cmd">curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/\
-  main/scripts/install.sh | bash</code></pre>
-        <button id="modal-copy-btn" class="copy-btn" data-copy-target="modal-curl-cmd" data-copy-raw="curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh | bash" type="button">Copy</button>
-      </div>
       <div class="modal-actions">
-        <button id="modal-prefer-curl-btn" class="btn-pill-gradient" type="button" style="width: 100%; justify-content: center;">
-          <span>✓ Switch to Curl Installer</span>
+        <button id="modal-prefer-curl-btn" class="btn-pill-gradient modal-action-btn" type="button">
+          <span>⚡ Install via Curl Script (Recommended)</span>
+        </button>
+        <button id="modal-prefer-brew-btn" class="btn-pill-dark modal-action-btn" type="button">
+          <span>🍺 Install via Homebrew Cask</span>
         </button>
         <button id="modal-bypass-download-link" class="modal-bypass-link" type="button">
-          Skip and continue direct download anyway →
+          Or proceed with direct file download (.pkg / .zip) &rarr;
         </button>
       </div>
     </div>
