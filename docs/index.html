@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MirrorLock — Watch your AI work. Touch nothing.</title>
-  <meta name="description" content="MirrorLock is a free, open-source macOS menu bar app that locks keyboard and mouse while keeping your screen visible — perfect for leaving Claude Code, Cursor, and AI coding agents running safely. Unlock with Touch ID, Apple Watch, or Android Watch.">
+  <meta name="description" content="MirrorLock is a free, open-source macOS menu bar app that locks your keyboard and mouse while keeping your screen visible — perfect for letting Claude Code, Cursor, and AI coding agents run safely while you step away. Unlock instantly with Touch ID, Apple Watch, or Android Watch.">
   <meta property="og:title" content="MirrorLock — Watch your AI work. Touch nothing.">
   <meta property="og:description" content="Free macOS botsitting for Cursor, Claude Code, and autonomous AI agents with Apple Watch & Android Watch unlock.">
   <meta property="og:type" content="website">
@@ -15,334 +15,377 @@
 </head>
 <body>
 
-  <!-- Galaxy Canvas (Twinkling Stars & Meteors) -->
-  <canvas id="space-canvas" aria-hidden="true"></canvas>
+  <!-- Ethereal Atmospheric Background Glows -->
+  <div class="cosmic-atmosphere" aria-hidden="true">
+    <div class="ethereal-orb-top"></div>
+    <div class="ethereal-orb-center"></div>
+  </div>
 
-  <!-- Cosmic Nebula Atmosphere Glow -->
-  <div class="galaxy-nebula" aria-hidden="true"></div>
+  <!-- Iridescent Prismatic Crystal (Figma visual element) -->
+  <svg class="prism-gem prism-gem-bottom-left" viewBox="0 0 100 130" fill="none" aria-hidden="true">
+    <polygon points="50,5 90,40 75,115 25,115 10,40" fill="url(#gem-grad-1)" opacity="0.85"/>
+    <polygon points="50,5 90,40 50,75" fill="url(#gem-grad-2)" opacity="0.9"/>
+    <polygon points="50,5 10,40 50,75" fill="url(#gem-grad-3)" opacity="0.9"/>
+    <polygon points="10,40 25,115 50,75" fill="url(#gem-grad-4)" opacity="0.95"/>
+    <polygon points="90,40 75,115 50,75" fill="url(#gem-grad-5)" opacity="0.95"/>
+    <polygon points="25,115 75,115 50,75" fill="url(#gem-grad-6)" opacity="0.9"/>
+    <defs>
+      <linearGradient id="gem-grad-1" x1="0" y1="0" x2="100" y2="130" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#38bdf8"/>
+        <stop offset="0.5" stop-color="#818cf8"/>
+        <stop offset="1" stop-color="#c084fc"/>
+      </linearGradient>
+      <linearGradient id="gem-grad-2" x1="50" y1="5" x2="90" y2="75" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#93c5fd"/>
+        <stop offset="1" stop-color="#60a5fa"/>
+      </linearGradient>
+      <linearGradient id="gem-grad-3" x1="10" y1="40" x2="50" y2="5" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#38bdf8"/>
+        <stop offset="1" stop-color="#22d3ee"/>
+      </linearGradient>
+      <linearGradient id="gem-grad-4" x1="10" y1="40" x2="50" y2="115" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#4f46e5"/>
+        <stop offset="1" stop-color="#7c3aed"/>
+      </linearGradient>
+      <linearGradient id="gem-grad-5" x1="50" y1="75" x2="90" y2="115" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#a855f7"/>
+        <stop offset="1" stop-color="#ec4899"/>
+      </linearGradient>
+      <linearGradient id="gem-grad-6" x1="25" y1="115" x2="75" y2="75" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#6366f1"/>
+        <stop offset="1" stop-color="#3b82f6"/>
+      </linearGradient>
+    </defs>
+  </svg>
 
-  <!-- Floating Background Planets -->
-  <div class="planet planet-ringed" aria-hidden="true"></div>
-  <div class="planet planet-crimson" aria-hidden="true"></div>
-  <div class="planet planet-moon" aria-hidden="true"></div>
+  <svg class="prism-gem prism-gem-top-right" viewBox="0 0 100 130" fill="none" aria-hidden="true">
+    <polygon points="50,5 90,40 75,115 25,115 10,40" fill="url(#gem-grad-1)" opacity="0.75"/>
+    <polygon points="50,5 90,40 50,75" fill="url(#gem-grad-2)" opacity="0.8"/>
+    <polygon points="50,5 10,40 50,75" fill="url(#gem-grad-3)" opacity="0.8"/>
+    <polygon points="10,40 25,115 50,75" fill="url(#gem-grad-4)" opacity="0.85"/>
+    <polygon points="90,40 75,115 50,75" fill="url(#gem-grad-5)" opacity="0.85"/>
+  </svg>
 
-  <div class="site-wrapper">
-    <!-- Navigation Header -->
-    <header class="site-header">
-      <a class="brand" href="#" aria-label="MirrorLock Home">
-        <img class="brand-icon" src="assets/icon-512.png" alt="MirrorLock Logo" width="36" height="36">
-        <span class="brand-title">MirrorLock</span>
-        <span class="brand-badge">macOS</span>
-      </a>
-      <nav class="site-nav">
-        <a href="#how" class="nav-link">How it works</a>
-        <a href="#features" class="nav-link">Features</a>
-        <a href="#unlock" class="nav-link">Watch Unlock</a>
-        <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener" class="nav-link">GitHub</a>
-        <a href="#install" class="nav-cta-btn">Download</a>
-      </nav>
-    </header>
+  <!-- Left Capsule Dock Navigation (Figma Signature Element) -->
+  <aside class="left-dock-nav" aria-label="Quick Navigation Dock">
+    <a href="#hero" class="dock-item active" aria-label="Home">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span class="dock-item-tooltip">Home</span>
+    </a>
+    <a href="#features" class="dock-item" aria-label="Features">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      <span class="dock-item-tooltip">Features</span>
+    </a>
+    <a href="#how" class="dock-item" aria-label="How it works">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+      <span class="dock-item-tooltip">How it Works</span>
+    </a>
+    <a href="#unlock" class="dock-item" aria-label="Watch Unlock">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg>
+      <span class="dock-item-tooltip">Watch Unlock</span>
+    </a>
+    <a href="#install" class="dock-item" aria-label="Install">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span class="dock-item-tooltip">Install</span>
+    </a>
+  </aside>
 
+  <!-- Top Navigation Header -->
+  <header class="site-header">
+    <a class="header-brand" href="#hero" aria-label="MirrorLock Home">
+      <img class="header-brand-logo" src="assets/icon-512.png" alt="MirrorLock Logo" width="36" height="36">
+      <span class="header-brand-name">MirrorLock</span>
+    </a>
+    <nav class="header-nav">
+      <a href="#features" class="header-nav-link">Features</a>
+      <a href="#how" class="header-nav-link">How it works</a>
+      <a href="#unlock" class="header-nav-link">Watch Unlock</a>
+      <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener" class="header-nav-link">GitHub</a>
+      <a href="#install" class="header-cta-pill">Download</a>
+    </nav>
+  </header>
+
+  <div class="main-content">
     <main>
       <!-- Hero Section -->
-      <section class="hero">
-        <div class="hero-pill">
-          <span class="hero-pill-star">✦</span>
-          <span>Free &amp; Open Source for macOS Sonoma 14+</span>
-        </div>
+      <section id="hero" class="hero-section">
+        <div class="hero-text-content">
+          <div class="hero-pill-badge">
+            <span class="hero-pill-sparkle">✦</span>
+            <span>macOS Menu Bar App for Botsitting</span>
+          </div>
 
-        <h1 class="hero-title">
-          Watch your AI work.<br>
-          <span class="gradient-text">Touch nothing.</span>
-        </h1>
+          <h1 class="hero-heading">
+            Watch your AI work.<br>
+            <span class="gradient-word">Touch nothing.</span>
+          </h1>
 
-        <p class="hero-description">
-          MirrorLock is a lightweight macOS menu bar app that <strong>locks your keyboard and mouse</strong> while keeping your screen completely visible. Leave <strong>Claude Code, Cursor, or autonomous agents</strong> coding safely while you step away.
-        </p>
-
-        <div class="hero-cta-group">
-          <a href="#install" class="btn-primary-large">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span>Download MirrorLock</span>
-          </a>
-          <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener" class="btn-secondary-large">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            <span>View on GitHub</span>
-          </a>
-        </div>
-
-        <!-- Quick Install Terminal Box in Hero -->
-        <div class="hero-quick-install">
-          <span class="quick-install-command" id="hero-brew-cmd">brew install --cask shubhransh-gupta/tap/mirrorlock</span>
-          <button class="copy-btn" data-copy-target="hero-brew-cmd" type="button">Copy</button>
-        </div>
-      </section>
-
-      <!-- How It Works Section -->
-      <section id="how" class="section">
-        <div class="section-header">
-          <span class="section-tag">Simple &amp; Safe</span>
-          <h2 class="section-title">How MirrorLock Works</h2>
-          <p class="section-subtitle">
-            Keep an eye on long-running AI pipelines without worrying about pets, kids, or accidental keystrokes.
+          <p class="hero-subtext">
+            MirrorLock is a free, open-source macOS app that <strong>hard-locks your keyboard and mouse</strong> while keeping your screen completely visible. Leave <strong>Claude Code, Cursor, or autonomous agents</strong> coding safely while you step away.
           </p>
-        </div>
 
-        <div class="steps-grid">
-          <div class="step-card">
-            <div class="step-number">1</div>
-            <h3>Lock with one click</h3>
-            <p>
-              Click the menu bar icon or press <kbd>⌘</kbd><kbd>⇧</kbd><kbd>M</kbd>. MirrorLock immediately blocks all keyboard, mouse, and trackpad inputs.
-            </p>
+          <div class="hero-button-group">
+            <a href="#install" class="btn-pill-gradient">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>Download MirrorLock</span>
+            </a>
+            <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener" class="btn-pill-dark">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              <span>GitHub</span>
+            </a>
           </div>
 
-          <div class="step-card">
-            <div class="step-number">2</div>
-            <h3>Watch your AI work</h3>
-            <p>
-              Your screen remains completely visible behind a subtle translucent tint. Your Mac will never sleep, allowing Claude or Cursor to finish undisturbed.
-            </p>
-          </div>
-
-          <div class="step-card">
-            <div class="step-number">3</div>
-            <h3>Unlock with your wrist</h3>
-            <p>
-              Double-press your Apple Watch side button, tap your Android Watch, or rest your finger on Touch ID to unlock instantly.
-            </p>
+          <div class="hero-homebrew-bar">
+            <span class="brew-code" id="hero-brew-cmd">brew install --cask shubhransh-gupta/tap/mirrorlock</span>
+            <button class="copy-mini-btn" data-copy-target="hero-brew-cmd" type="button">Copy</button>
           </div>
         </div>
-      </section>
 
-      <!-- Key Features Section -->
-      <section id="features" class="section">
-        <div class="section-header">
-          <span class="section-tag">Capabilities</span>
-          <h2 class="section-title">Everything You Need</h2>
-          <p class="section-subtitle">
-            Engineered natively in Swift for peak macOS performance, battery efficiency, and privacy.
-          </p>
-        </div>
+        <!-- Hero Right: Nested Cosmic Orbital System from Figma -->
+        <div class="hero-visual-orbital" aria-hidden="true">
+          <!-- Concentric Elliptical Orbital SVG Rings -->
+          <svg class="orbital-svg-rings" viewBox="0 0 450 450" fill="none">
+            <ellipse cx="225" cy="225" rx="200" ry="110" stroke="rgba(168, 85, 247, 0.3)" stroke-width="1.5" stroke-dasharray="4 6" transform="rotate(-20 225 225)"/>
+            <ellipse cx="225" cy="225" rx="160" ry="85" stroke="rgba(56, 189, 248, 0.35)" stroke-width="1.2" transform="rotate(15 225 225)"/>
+            <ellipse cx="225" cy="225" rx="120" ry="60" stroke="rgba(236, 72, 153, 0.25)" stroke-width="1" transform="rotate(-35 225 225)"/>
+          </svg>
 
-        <div class="features-grid">
-          <div class="feature-item">
-            <div class="feature-icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <!-- Planets on the orbits -->
+          <div class="orbital-planet planet-p1"></div>
+          <div class="orbital-planet planet-p2"></div>
+          <div class="orbital-planet planet-p3"></div>
+
+          <!-- Center Interactive Glass Preview Card -->
+          <div class="orbital-center-card">
+            <div class="orbital-card-status-pill">
+              <span class="status-dot-pulse"></span>
+              <span>MirrorLock Active</span>
             </div>
+            <h3 class="orbital-card-title">Claude Code Running</h3>
+            <p class="orbital-card-desc">
+              Hardware inputs hard-locked. Display kept illuminated. Step away with 100% peace of mind.
+            </p>
+            <div class="orbital-card-meta">
+              <span>Touch ID / Watch Armed</span>
+              <span>⌘⇧M to Toggle</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Showcase Deck: "My recent work" matching Figma UI -->
+      <section id="features" class="showcase-section">
+        <div class="section-label">Core Capabilities</div>
+        <h2 class="section-headline">Engineered for Safe Botsitting</h2>
+
+        <!-- Interactive Category Tabs -->
+        <div class="showcase-tabs" role="tablist">
+          <button class="showcase-tab active" type="button">Live Mirror</button>
+          <button class="showcase-tab" type="button">Input Severance</button>
+          <button class="showcase-tab" type="button">Watch Unlock</button>
+        </div>
+
+        <!-- 3D Floating Glass Cards Deck -->
+        <div class="showcase-deck">
+          <div class="showcase-card active">
+            <span class="card-badge">ScreenCaptureKit</span>
             <h3>Live Screen Mirror</h3>
             <p>
-              Uses ScreenCaptureKit so your terminals, IDEs, and browsers stay 100% visible while you step away from your desk.
+              Your active desktop remains completely visible behind a subtle dimmed overlay so you can monitor your AI agents from across the room.
             </p>
+            <ul class="card-feature-list">
+              <li>High-efficiency 60fps Metal stream</li>
+              <li>Zero desktop blur or obfuscation</li>
+              <li>Multi-monitor blackout shielding</li>
+            </ul>
           </div>
 
-          <div class="feature-item">
-            <div class="feature-icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </div>
-            <h3>Complete Input Lock</h3>
+          <div class="showcase-card">
+            <span class="card-badge">CGEventTap Kernel</span>
+            <h3>Hard Input Severance</h3>
             <p>
-              Hard-blocks keyboard keys, mouse clicks, mouse movements, scrolling, gestures, and media keys at the system level.
+              Hardware-blocks all keyboard keys, mouse clicks, trackpad movements, and scrolling before macOS apps can process them.
             </p>
+            <ul class="card-feature-list">
+              <li>Low-level event tap interception</li>
+              <li>Watching eye on keystroke attempt</li>
+              <li>Red border flash on trackpad touch</li>
+            </ul>
           </div>
 
-          <div class="feature-item">
-            <div class="feature-icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg>
-            </div>
-            <h3>Watch &amp; Touch ID Unlock</h3>
+          <div class="showcase-card">
+            <span class="card-badge">LocalAuthentication</span>
+            <h3>Watch &amp; Touch ID</h3>
             <p>
-              Unlock effortlessly with Apple Watch, Wear OS Android Watch, or Mac Touch ID without typing passwords.
+              Rest your finger on Touch ID or double-press the side button on your Apple Watch or Wear OS Android Watch for instant release.
             </p>
+            <ul class="card-feature-list">
+              <li>Apple Watch crown double-tap</li>
+              <li>Tap-to-unlock wearable gestures</li>
+              <li>Hardware Secure Enclave check</li>
+            </ul>
           </div>
+        </div>
+      </section>
 
-          <div class="feature-item">
-            <div class="feature-icon-box">
+      <!-- 6 Capability Modules -->
+      <section id="how" class="capabilities-section">
+        <div style="text-align: center; margin-bottom: 36px;">
+          <div class="section-label">Performance &amp; Reliability</div>
+          <h3 style="font-size: 1.8rem; font-weight: 700; margin: 0;">Built for Developer Workflows</h3>
+        </div>
+
+        <div class="grid-3x2">
+          <div class="cap-card">
+            <div class="cap-icon-circle">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
-            <h3>Keeps Your Mac Awake</h3>
-            <p>
-              Maintains an IOKit power assertion while locked, guaranteeing that your display and CPU will not sleep mid-task.
-            </p>
+            <h4>Keeps Your Mac Awake</h4>
+            <p>Holds an active IOKit power assertion while locked so displays and CPUs never idle-sleep mid-compile.</p>
           </div>
 
-          <div class="feature-item">
-            <div class="feature-icon-box">
+          <div class="cap-card">
+            <div class="cap-icon-circle">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             </div>
-            <h3>Auto-Lock When Idle</h3>
-            <p>
-              Optionally locks after 1–30 minutes of inactivity, with a handy 10-second cancelable countdown HUD.
-            </p>
+            <h4>Auto-Lock When Idle</h4>
+            <p>Configurable auto-lock after 1 to 30 minutes of inactivity, with a 10-second cancelable HUD countdown.</p>
           </div>
 
-          <div class="feature-item">
-            <div class="feature-icon-box">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-            </div>
-            <h3>Intruder Warning &amp; Eye</h3>
-            <p>
-              Accidental or intentional keystrokes trigger an eye surveillance icon, and touching the trackpad flashes a red border alert.
-            </p>
-          </div>
-
-          <div class="feature-item">
-            <div class="feature-icon-box">
+          <div class="cap-card">
+            <div class="cap-icon-circle">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             </div>
-            <h3>Multi-Monitor Support</h3>
-            <p>
-              Mirrors your primary screen while cleanly blanking secondary displays in black. Unplugging displays never unlocks your Mac.
-            </p>
+            <h4>Multi-Display Aware</h4>
+            <p>Keeps primary monitor mirrored while secondary displays are shielded in black. Unplugging never unlocks.</p>
           </div>
 
-          <div class="feature-item">
-            <div class="feature-icon-box">
+          <div class="cap-card">
+            <div class="cap-icon-circle">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h4>Intruder Tamper Warnings</h4>
+            <p>Keyboard touches summon a watching eye icon, while physical trackpad clicks trigger a red perimeter alert.</p>
+          </div>
+
+          <div class="cap-card">
+            <div class="cap-icon-circle">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-            <h3>100% Private &amp; Local</h3>
-            <p>
-              Zero network requests, zero telemetry, zero analytics. Everything runs locally on your machine under an MIT license.
-            </p>
+            <h4>100% Local &amp; Private</h4>
+            <p>MIT licensed, zero analytics, zero network telemetry. Runs entirely sandboxed on your Mac.</p>
           </div>
 
-          <div class="feature-item">
-            <div class="feature-icon-box">
+          <div class="cap-card">
+            <div class="cap-icon-circle">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
             </div>
-            <h3>Emergency Exit Key</h3>
-            <p>
-              Includes an optional customizable emergency escape shortcut (e.g. ⌃⌥⌘Esc) so you can never get locked out.
-            </p>
+            <h4>Emergency Override Key</h4>
+            <p>Optional unauthenticated escape combination (e.g. ⌃⌥⌘Esc) for guaranteed fail-safe access.</p>
           </div>
         </div>
       </section>
 
-      <!-- Watch Unlock Section -->
-      <section id="unlock" class="section">
-        <div class="section-header">
-          <span class="section-tag">Convenience</span>
-          <h2 class="section-title">Unlock Your Way</h2>
-          <p class="section-subtitle">
-            No need to sit down and type a password just to check on your code.
-          </p>
-        </div>
-
-        <div class="unlock-grid">
-          <div class="unlock-box">
-            <span class="unlock-badge">Apple Watch</span>
-            <h3>Apple Watch Unlock</h3>
+      <!-- Installation Container (Matching the Figma Contact Box) -->
+      <section id="install" class="install-section">
+        <div class="install-glass-box">
+          <div class="install-left">
+            <div class="section-label" style="text-align: left;">Quick Installation</div>
+            <h2>Get MirrorLock</h2>
             <p>
-              Double-press the side button on your Apple Watch or use the optional "Tap to unlock" feature to dismiss the lock screen instantly using Apple's local authentication.
+              Installs cleanly on macOS Sonoma (14+) and macOS Sequoia via signed package or Homebrew. No Gatekeeper friction.
             </p>
-          </div>
 
-          <div class="unlock-box">
-            <span class="unlock-badge">Wear OS</span>
-            <h3>Android Watch Unlock</h3>
-            <p>
-              Built-in framework for Android Wear OS smartwatches. Send a tap-to-unlock signal from your watch to MirrorLock via your local encrypted connection.
-            </p>
-          </div>
-
-          <div class="unlock-box">
-            <span class="unlock-badge">Touch ID</span>
-            <h3>Touch ID Sensor</h3>
-            <p>
-              Rest your finger on your Mac keyboard's Touch ID sensor. Validated instantaneously through Apple's Secure Enclave hardware.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Installation Section -->
-      <section id="install" class="section">
-        <div class="section-header">
-          <span class="section-tag">Get Started</span>
-          <h2 class="section-title">Install MirrorLock</h2>
-          <p class="section-subtitle">
-            Choose your preferred installation method below.
-          </p>
-        </div>
-
-        <div class="install-container">
-          <div class="install-tabs">
-            <button class="tab-btn active" data-tab="brew" type="button">Homebrew (Recommended)</button>
-            <button class="tab-btn" data-tab="curl" type="button">1-Line Terminal</button>
-            <button class="tab-btn" data-tab="direct" type="button">Direct Downloads</button>
-          </div>
-
-          <!-- Homebrew Pane -->
-          <div id="pane-brew" class="install-pane active">
-            <p class="install-pane-desc">Install cleanly via Homebrew cask in a single command:</p>
-            <div class="code-box">
-              <pre><code>brew install --cask shubhransh-gupta/tap/mirrorlock</code></pre>
-              <button class="copy-btn" type="button">Copy</button>
-            </div>
-            <p class="install-note">
-              Installs a signed <code>.pkg</code> directly into <code>/Applications</code> with zero Gatekeeper warnings.
-            </p>
-          </div>
-
-          <!-- Curl Pane -->
-          <div id="pane-curl" class="install-pane">
-            <p class="install-pane-desc">Or run the automated install script directly in your terminal:</p>
-            <div class="code-box">
-              <pre><code>curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh | bash</code></pre>
-              <button class="copy-btn" type="button">Copy</button>
-            </div>
-            <p class="install-note">
-              Downloads the latest release and places MirrorLock in your Applications folder automatically.
-            </p>
-          </div>
-
-          <!-- Direct Download Pane -->
-          <div id="pane-direct" class="install-pane">
-            <p class="install-pane-desc">Download standalone installers from the latest release:</p>
-            <div class="direct-downloads-row">
-              <a href="https://github.com/shubhransh-gupta/mirrorLock/releases/latest/download/MirrorLock-1.2.0.pkg" class="download-tile">
-                <span class="download-tile-icon">📦</span>
-                <div>
-                  <div class="download-tile-title">MirrorLock-1.2.0.pkg</div>
-                  <p class="download-tile-sub">Signed macOS Installer</p>
-                </div>
-              </a>
-              <a href="https://github.com/shubhransh-gupta/mirrorLock/releases/latest/download/MirrorLock-1.2.0.zip" class="download-tile">
-                <span class="download-tile-icon">🗜️</span>
-                <div>
-                  <div class="download-tile-title">MirrorLock-1.2.0.zip</div>
-                  <p class="download-tile-sub">Application Zip Archive</p>
-                </div>
-              </a>
+            <div class="shortcut-spec-box">
+              <div class="shortcut-row">
+                <span>Default Lock Hotkey</span>
+                <div><kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>M</kbd></div>
+              </div>
+              <div class="shortcut-row">
+                <span>Default Unlock Hotkey</span>
+                <div><kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>U</kbd></div>
+              </div>
+              <div class="shortcut-row">
+                <span>Emergency Escape Key</span>
+                <div><kbd>⌃</kbd> <kbd>⌥</kbd> <kbd>⌘</kbd> <kbd>Esc</kbd></div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Shortcuts Banner -->
-        <div class="shortcuts-card">
-          <div><strong>Default Lock:</strong> <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>M</kbd></div>
-          <div><strong>Unlock:</strong> <kbd>⌘</kbd> <kbd>⇧</kbd> <kbd>U</kbd></div>
-          <div><strong>Emergency Exit:</strong> <kbd>⌃</kbd> <kbd>⌥</kbd> <kbd>⌘</kbd> <kbd>Esc</kbd></div>
+          <div class="install-right">
+            <div class="install-tab-nav" role="tablist">
+              <button class="install-tab-btn active" data-tab="brew" type="button">Homebrew</button>
+              <button class="install-tab-btn" data-tab="curl" type="button">Curl Oneliner</button>
+              <button class="install-tab-btn" data-tab="direct" type="button">Direct Downloads</button>
+            </div>
+
+            <!-- Homebrew Pane -->
+            <div id="pane-brew" class="install-pane active">
+              <p class="pane-text">Recommended single-line installation:</p>
+              <div class="code-box">
+                <pre><code>brew install --cask shubhransh-gupta/tap/mirrorlock</code></pre>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <p class="pane-text" style="font-size: 0.8rem; color: var(--text-dim);">
+                Or step-by-step: <code>brew tap shubhransh-gupta/tap &amp;&amp; brew install --cask mirrorlock</code>
+              </p>
+            </div>
+
+            <!-- Curl Pane -->
+            <div id="pane-curl" class="install-pane">
+              <p class="pane-text">Automated unattended installer script:</p>
+              <div class="code-box">
+                <pre><code>curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh | bash</code></pre>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+            </div>
+
+            <!-- Direct Download Pane -->
+            <div id="pane-direct" class="install-pane">
+              <p class="pane-text">Standalone packages from GitHub Releases:</p>
+              <div class="direct-downloads-grid">
+                <a href="https://github.com/shubhransh-gupta/mirrorLock/releases/latest/download/MirrorLock-1.2.0.pkg" class="direct-link-card">
+                  <span class="direct-icon">📦</span>
+                  <div>
+                    <div class="direct-title">MirrorLock-1.2.0.pkg</div>
+                    <div class="direct-sub">Signed Installer Package</div>
+                  </div>
+                </a>
+                <a href="https://github.com/shubhransh-gupta/mirrorLock/releases/latest/download/MirrorLock-1.2.0.zip" class="direct-link-card">
+                  <span class="direct-icon">🗜️</span>
+                  <div>
+                    <div class="direct-title">MirrorLock-1.2.0.zip</div>
+                    <div class="direct-sub">Application Zip Archive</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer with Circular Social Badges from Figma -->
     <footer class="site-footer">
       <div class="footer-inner">
-        <p class="footer-text">
+        <p class="footer-credits">
           &copy; <span id="year">2026</span> shubhransh-gupta. Released under the open-source MIT License.
         </p>
-        <div class="footer-links">
-          <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://github.com/shubhransh-gupta/mirrorLock/releases" target="_blank" rel="noopener">Releases</a>
-          <a href="https://github.com/shubhransh-gupta/mirrorLock/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
+        <div class="social-pill-group">
+          <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener" class="social-circle-btn" title="GitHub Repository" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </a>
+          <a href="https://github.com/shubhransh-gupta/mirrorLock/releases" target="_blank" rel="noopener" class="social-circle-btn" title="Releases" aria-label="Releases">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+          <a href="https://github.com/shubhransh-gupta/mirrorLock/blob/main/LICENSE" target="_blank" rel="noopener" class="social-circle-btn" title="MIT License" aria-label="License">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </a>
         </div>
       </div>
     </footer>
   </div>
 
-  <script src="space.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
