@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MirrorLock — Watch your AI work. Touch nothing.</title>
-  <meta name="description" content="MirrorLock is a free, open-source macOS menu bar app that locks keyboard and mouse while keeping your screen visible — perfect for leaving AI coding agents running while you step away. Unlock with Touch ID, Apple Watch, or Android Watch.">
-  <meta property="og:title" content="MirrorLock">
-  <meta property="og:description" content="Watch your AI work. Touch nothing. Free macOS botsitting for Cursor, Claude Code, and more with Apple Watch & Android Watch unlock.">
+  <title>MirrorLock // Neural Botsitting Matrix for macOS</title>
+  <meta name="description" content="MirrorLock is an open-source macOS cybernetic botsitter. Hard-sever keyboard and mouse input at kernel level while keeping your screen visible for Cursor, Claude Code, and autonomous AI agents. Unlock via Apple Watch, Wear OS, or Touch ID.">
+  <meta property="og:title" content="MirrorLock // Cybernetic Botsitting Protocol">
+  <meta property="og:description" content="Watch your AI work. Touch nothing. Military-grade input severance with live screen mirroring & biometric wrist release.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/icon-512.png">
   <link rel="icon" href="assets/favicon.png" type="image/png">
@@ -14,203 +14,656 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="bg-glow bg-glow-1"></div>
-  <div class="bg-glow bg-glow-2"></div>
 
+  <!-- CRT Scanline Phosphor Filter -->
+  <div id="crt-scanline-layer" class="crt-overlay" aria-hidden="true"></div>
+
+  <!-- Top Telemetry Status Stream -->
+  <aside class="telemetry-ticker" aria-label="System Telemetry">
+    <div class="telemetry-items">
+      <div class="telemetry-item">
+        <span class="telemetry-dot"></span>
+        <span>SYS_STATUS: ONLINE // DEFENSE GRID ACTIVE</span>
+      </div>
+      <div class="telemetry-item">
+        <span class="telemetry-dot mars"></span>
+        <span>KERNEL_HOOK: CGEVENTTAP [ARMED]</span>
+      </div>
+      <div class="telemetry-item">
+        <span class="telemetry-dot amber"></span>
+        <span>IOKIT_ASSERTION: DISPLAY_PERSIST [ON]</span>
+      </div>
+      <div class="telemetry-item">
+        <span>SECURITY PROTOCOL: ZERO_TELEMETRY // AIR-GAPPED</span>
+      </div>
+      <div class="telemetry-item">
+        <span id="telemetry-time">--:--:-- UTC</span>
+      </div>
+      <div class="telemetry-item">
+        <span id="telemetry-uptime">UPTIME: 00:00</span>
+      </div>
+    </div>
+    <div class="telemetry-controls">
+      <button id="toggle-sfx" class="telemetry-btn" title="Toggle Synthesized Audio Feedback" type="button">
+        <span class="toggle-icon">🔊</span>
+        <span class="toggle-label">SFX: MUTED</span>
+      </button>
+      <button id="toggle-crt" class="telemetry-btn active" title="Toggle CRT Scanline Shader" type="button">
+        <span class="toggle-icon">📺</span>
+        <span class="toggle-label">CRT: ON</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Cybernetic Site Header -->
   <header class="site-header">
-    <a class="brand" href="#">
-      <img src="assets/icon-512.png" alt="" width="36" height="36">
-      <span>MirrorLock</span>
+    <a class="brand" href="#" aria-label="MirrorLock Home">
+      <div class="brand-icon-wrap">
+        <span class="brand-corner-tl"></span>
+        <img src="assets/icon-512.png" alt="MirrorLock Icon" width="38" height="38">
+        <span class="brand-corner-br"></span>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">MIRRORLOCK</span>
+        <span class="brand-sub">REKALL PROTOCOL // v1.2.0</span>
+      </div>
     </a>
     <nav>
-      <a href="#features">Features</a>
-      <a href="#how">How it works</a>
-      <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener">GitHub</a>
-      <a href="#install">Install</a>
+      <a href="#simulator" class="nav-link">// HUD SIMULATOR</a>
+      <a href="#features" class="nav-link">// DEFENSE MATRIX</a>
+      <a href="#biometrics" class="nav-link">// NEURAL WRIST</a>
+      <a href="#comparison" class="nav-link">// THREAT AUDIT</a>
+      <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener" class="nav-link">// GITHUB</a>
+      <a href="#install" class="header-cta">
+        <span>DEPLOY v1.2.0</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+      </a>
     </nav>
   </header>
 
   <main>
+    <!-- Hero Section -->
     <section class="hero">
-      <h1>MirrorLock</h1>
-      <p class="tagline">Watch your AI work. Touch nothing.</p>
-      <p class="description">
-        MirrorLock is a free, open-source macOS menu bar app that locks keyboard and mouse while keeping your screen visible — perfect for leaving AI coding agents running while you step away. 
-        <strong>Unlock instantly with Touch ID, Apple Watch, or Android Watch.</strong>
-      </p>
-      <a href="#install" class="button-primary">Download MirrorLock</a>
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge-wrap">
+            <span class="hero-badge-dot"></span>
+            <span class="hero-badge-text">[ TOTAL RECALL // BOTSITTING PROTOCOL ]</span>
+          </div>
+
+          <h1>
+            <span class="text-glow">WATCH YOUR AI WORK.</span><br>
+            <span class="text-mars">TOUCH NOTHING.</span>
+          </h1>
+
+          <p class="hero-lead">
+            Hard-block physical keyboard and mouse inputs via low-level kernel <strong>CGEventTap</strong> while streaming your autonomous coding agents, LLM pipelines, and Cursor/Claude sessions in <strong>crystal-clear real-time</strong>.
+          </p>
+
+          <div class="hero-telemetry-tags">
+            <span class="telemetry-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              HARD INPUT SEVERANCE
+            </span>
+            <span class="telemetry-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg>
+              APPLE &amp; WEAR OS UNLOCK
+            </span>
+            <span class="telemetry-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              IOKIT SLEEP SUPPRESSION
+            </span>
+            <span class="telemetry-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              100% LOCAL // AIR-GAPPED
+            </span>
+          </div>
+
+          <div class="hero-actions">
+            <a href="#install" class="cyber-btn-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>INSTALL MIRRORLOCK</span>
+            </a>
+            <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener" class="cyber-btn-secondary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              <span>AUDIT SOURCE (MIT)</span>
+            </a>
+          </div>
+
+          <div class="hero-shortcuts-hud">
+            <div class="shortcut-item">
+              <span>ENGAGE:</span>
+              <kbd>⌘</kbd><kbd>⇧</kbd><kbd>M</kbd>
+            </div>
+            <div class="shortcut-item">
+              <span>DISENGAGE:</span>
+              <kbd>⌘</kbd><kbd>⇧</kbd><kbd>U</kbd>
+            </div>
+            <div class="shortcut-item">
+              <span>EMERGENCY ABORT:</span>
+              <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⌘</kbd><kbd>Esc</kbd>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive HUD Terminal / Simulator -->
+        <div id="simulator" class="hero-visual">
+          <div class="sim-container">
+            <span class="sim-corner-accent sim-tl"></span>
+            <span class="sim-corner-accent sim-tr"></span>
+            <span class="sim-corner-accent sim-bl"></span>
+            <span class="sim-corner-accent sim-br"></span>
+
+            <div class="sim-titlebar">
+              <div class="mac-dots">
+                <span class="mac-dot mac-dot-red"></span>
+                <span class="mac-dot mac-dot-yellow"></span>
+                <span class="mac-dot mac-dot-green"></span>
+              </div>
+              <div class="sim-titlebar-text">
+                TERMINAL // REKALL-WORKSTATION-01
+              </div>
+              <div id="sim-state-badge" class="sim-badge badge-locked">
+                DEFENSE ARMED
+              </div>
+            </div>
+
+            <!-- Simulated macOS Desktop & Agent Terminal -->
+            <div id="sim-screen" class="sim-screen">
+              <div class="sim-agent-info">
+                <span>TASK: AUTONOMOUS_BOTSITTING // CLAUDE_AGENT_STREAM</span>
+                <span>IOKIT: AWAKE [PERSISTENT]</span>
+              </div>
+
+              <!-- Real-time Autonomous Agent Code Stream -->
+              <div id="sim-code-stream" class="sim-code-stream">
+                <div class="sim-code-line comment">// REKALL NEURAL LINK INITIALIZED...</div>
+                <div class="sim-code-line keyword">const botWatcher = new MirrorLock.Core();</div>
+                <div class="sim-code-line">botWatcher.engageHardwareSeverance({ mode: 'CGEventTap' });</div>
+                <div class="sim-code-line highlight">[KERNEL] Physical keyboard, mouse, gestures dropped.</div>
+                <div class="sim-code-line comment">// Streaming agent compilation telemetry:</div>
+                <div class="sim-code-line">Building target /Core/MatrixEngine... [DONE]</div>
+              </div>
+
+              <!-- Cybernetic Hologram Overlay -->
+              <div id="sim-lock-overlay" class="sim-lock-overlay">
+                <div class="sim-hud-top">
+                  <div class="sim-hud-pill">
+                    <span class="pulse-cyan"></span>
+                    <span id="sim-status-indicator">MIRRORLOCK ACTIVE // INPUTS SEVERED</span>
+                  </div>
+                  <div class="sim-hud-pill">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                    <span>AUTO-LOCK TRIPWIRE: READY</span>
+                  </div>
+                </div>
+
+                <div class="sim-hud-center">
+                  <div class="sim-reticle">
+                    <div class="sim-reticle-inner"></div>
+                  </div>
+                  <div class="sim-hud-title">SURVEILLANCE MODE ENGAGED</div>
+                  <div class="sim-hud-sub">DESKTOP VISIBLE // HARDWARE CONTROLS FROZEN</div>
+                </div>
+
+                <div class="sim-hud-bottom">
+                  <span class="sim-click-hint">CLICK SCREEN TO TEST INTRUDER TRIPWIRE</span>
+                </div>
+              </div>
+
+              <!-- Intrusion Alert Pop-up Modal -->
+              <div id="sim-alert-box" class="sim-alert-box hidden" role="alert">
+                <span class="alert-icon">👁️</span>
+                <div class="alert-title">[ ! ] INTRUSION DETECTED</div>
+                <div class="alert-sub">PHYSICAL INPUT TAMPERING INTERCEPTED &amp; DROPPED</div>
+              </div>
+            </div>
+
+            <!-- Simulator Control Deck -->
+            <div class="sim-controls">
+              <button id="sim-trigger-intruder" class="sim-btn sim-btn-danger" type="button">
+                <span>🚨</span> TEST TAMPER TRIPWIRE
+              </button>
+              <button id="sim-trigger-unlock" class="sim-btn sim-btn-auth" type="button">
+                <span>⌚</span> SIMULATE WATCH UNLOCK
+              </button>
+              <button id="sim-trigger-lock" class="sim-btn" type="button">
+                <span class="key-icon">⚡</span> TOGGLE SHIELD (⌘⇧M)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
+    <!-- Cybernetic Features Grid -->
     <section id="features" class="section">
       <div class="section-header">
-        <h2>Features</h2>
-        <p class="section-description">
-          Everything you need to securely step away while your AI works.
+        <span class="section-eyebrow">// TELEMETRY SPECIFICATIONS</span>
+        <h2 class="section-title">THE REKALL DEFENSE MATRIX</h2>
+        <p class="section-desc">
+          Engineered for developers leaving autonomous AI agents, overnight test suites, and compile pipelines running unattended.
         </p>
       </div>
+
       <div class="features-grid">
-        <div class="feature-card">
-          <h3>🖥️ Live Mirror Overlay</h3>
-          <p>Your desktop stays visible behind a subtle dimmed layer via ScreenCaptureKit.</p>
-        </div>
-        <div class="feature-card">
-          <h3>🔒 Hard Input Lock</h3>
-          <p>Hard-blocks keyboard, mouse, trackpad, scrolling, gestures, and media keys via low-level CGEventTap.</p>
-        </div>
-        <div class="feature-card">
-          <h3>⌚ Apple Watch & Android Watch Unlock</h3>
-          <p>Rest your finger on Touch ID or use your Apple Watch or Android Watch to unlock. Includes optional "Tap to unlock" with compatible watches.</p>
-        </div>
-        <div class="feature-card">
-          <h3>☕ Keeps Your Mac Awake</h3>
-          <p>Holds an IOKit power assertion while locked so the display and system never idle-sleep. Your AI agents keep coding without interruption.</p>
-        </div>
-        <div class="feature-card">
-          <h3>⏱️ Auto-Lock When Idle</h3>
-          <p>Automatically locks after 1–30 minutes of inactivity, preceded by an interactive 10-second cancelable countdown HUD.</p>
-        </div>
-        <div class="feature-card">
-          <h3>🚀 Launch at Login</h3>
-          <p>Starts quietly in your menu bar on system startup via SMAppService.</p>
-        </div>
-        <div class="feature-card">
-          <h3>⌨️ Configurable Hotkeys</h3>
-          <p>Customize activation shortcut (⌘⇧M default, or ⌘⇧L Wardlume style) and unlock shortcut (⌘⇧U).</p>
-        </div>
-        <div class="feature-card">
-          <h3>🛑 Emergency Exit Hotkey</h3>
-          <p>Optional unauthenticated escape key (e.g. ⌃⌥⌘Esc) for guaranteed safety.</p>
-        </div>
-        <div class="feature-card">
-          <h3>🖥️ Multi-Display Aware</h3>
-          <p>Primary display shows live mirror; secondary displays are shielded in black. Unplugging or plugging monitors never unlocks your Mac.</p>
-        </div>
-        <div class="feature-card">
-          <h3>🚨 Intruder Alerts & Watching Eye</h3>
-          <p>Typing triggers a watching eye icon, and trackpad/mouse touches trigger a red border flash and alert sound.</p>
-        </div>
-        <div class="feature-card">
-          <h3>🛡️ 100% Local & Private</h3>
-          <p>MIT licensed, zero telemetry, zero analytics, zero network requests.</p>
-        </div>
+        <!-- Feature 1 -->
+        <article class="feature-card">
+          <div class="feature-header">
+            <div class="feature-icon-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <span class="feature-code-id">SYS_TAP_01</span>
+          </div>
+          <h3>Hard Input Severance</h3>
+          <p>
+            Kernel-grade event interception via macOS <code>CGEventTap</code>. Drops all physical keypresses, mouse movement, clicks, scrolls, trackpad gestures, and media keys before applications can process them.
+          </p>
+          <div class="feature-meta">
+            <span>DRIVER: LOW_LEVEL_CGEVENT</span>
+            <span class="feature-status">● ARMED</span>
+          </div>
+        </article>
+
+        <!-- Feature 2 -->
+        <article class="feature-card">
+          <div class="feature-header">
+            <div class="feature-icon-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <span class="feature-code-id">SYS_SCK_02</span>
+          </div>
+          <h3>Live Mirror Compositor</h3>
+          <p>
+            Powered by Apple's high-efficiency <code>ScreenCaptureKit</code>. Your active desktop remains clearly visible behind a subtle tactical tint so you can inspect terminal logs and AI outputs from across the room.
+          </p>
+          <div class="feature-meta">
+            <span>COMPOSITOR: 60FPS METAL</span>
+            <span class="feature-status">● REAL-TIME</span>
+          </div>
+        </article>
+
+        <!-- Feature 3 -->
+        <article class="feature-card">
+          <div class="feature-header">
+            <div class="feature-icon-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg>
+            </div>
+            <span class="feature-code-id">SYS_BIO_03</span>
+          </div>
+          <h3>Neural Wrist Release</h3>
+          <p>
+            Authenticate effortlessly with your Apple Watch side-button double-tap or tap-to-unlock. Includes native support for Android Wear OS companion signals over secure local pairing.
+          </p>
+          <div class="feature-meta">
+            <span>INTERFACE: LOCAL AUTH</span>
+            <span class="feature-status">● VERIFIED</span>
+          </div>
+        </article>
+
+        <!-- Feature 4 -->
+        <article class="feature-card">
+          <div class="feature-header">
+            <div class="feature-icon-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <span class="feature-code-id">SYS_IOK_04</span>
+          </div>
+          <h3>Anti-Sleep Power Lock</h3>
+          <p>
+            Holds an active <code>IOKit</code> power assertion while engaged. Eliminates macOS idle timeouts, preventing display blackout and CPU sleep so autonomous coding agents never halt mid-turn.
+          </p>
+          <div class="feature-meta">
+            <span>SUBSYSTEM: IOPMAssertion</span>
+            <span class="feature-status">● SUSTAINED</span>
+          </div>
+        </article>
+
+        <!-- Feature 5 -->
+        <article class="feature-card">
+          <div class="feature-header">
+            <div class="feature-icon-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <span class="feature-code-id">SYS_EYE_05</span>
+          </div>
+          <h3>Intruder Tripwire &amp; Cyber Eye</h3>
+          <p>
+            Unauthorized keyboard input immediately activates an ominous Cybernetic Watching Eye. Physical mouse or trackpad displacement triggers a pulsing red HUD perimeter flare and deterrence tone.
+          </p>
+          <div class="feature-meta">
+            <span>DETECTOR: EVENT DISPOSITION</span>
+            <span class="feature-status">● SURVEILLANCE</span>
+          </div>
+        </article>
+
+        <!-- Feature 6 -->
+        <article class="feature-card">
+          <div class="feature-header">
+            <div class="feature-icon-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <span class="feature-code-id">SYS_DSP_06</span>
+          </div>
+          <h3>Multi-Display Blackout Shield</h3>
+          <p>
+            Retains the active live mirror on your primary workstation display while cloaking secondary monitors in absolute blackout. Hot-unplugging or plugging monitors never unlocks the defense matrix.
+          </p>
+          <div class="feature-meta">
+            <span>DISPLAY: MULTI_CANVAS</span>
+            <span class="feature-status">● SHIELDED</span>
+          </div>
+        </article>
+
+        <!-- Feature 7 -->
+        <article class="feature-card">
+          <div class="feature-header">
+            <div class="feature-icon-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <span class="feature-code-id">SYS_AUT_07</span>
+          </div>
+          <h3>Autonomous Inactivity Radar</h3>
+          <p>
+            Configurable auto-lock triggers after 1 to 30 minutes of developer inactivity. Preceded by an interactive 10-second cancelable holographic countdown HUD.
+          </p>
+          <div class="feature-meta">
+            <span>TIMER: 1-30 MIN RANGE</span>
+            <span class="feature-status">● OPTIONAL</span>
+          </div>
+        </article>
+
+        <!-- Feature 8 -->
+        <article class="feature-card">
+          <div class="feature-header">
+            <div class="feature-icon-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <span class="feature-code-id">SYS_AIR_08</span>
+          </div>
+          <h3>Air-Gapped Privacy Core</h3>
+          <p>
+            Zero telemetry. Zero network calls. Zero third-party analytics. 100% of biometric authentication and event trapping is executed in Apple's local sandbox enclave. MIT licensed.
+          </p>
+          <div class="feature-meta">
+            <span>AUDIT: 100% OPEN SOURCE</span>
+            <span class="feature-status">● AIR-GAPPED</span>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section id="unlock" class="section">
+    <!-- Biometric Wrist Unlock Section -->
+    <section id="biometrics" class="section">
       <div class="section-header">
-        <h2>Watch Unlock Details</h2>
-        <p class="section-description">
-          Secure and convenient unlocking options for your workflow.
+        <span class="section-eyebrow">// NEURAL HANDSHAKE SPECIFICATION</span>
+        <h2 class="section-title">BIOMETRIC WRIST &amp; ENCLAVE RELEASE</h2>
+        <p class="section-desc">
+          Total Recall style instantaneous authentication. Reclaim keyboard and mouse control without touching password dialogs.
         </p>
       </div>
-      <div class="unlock-options">
-        <div class="unlock-option">
-          <h3>⌚ Apple Watch Unlock</h3>
-          <p>Double-press the side button on your Apple Watch while MirrorLock is active. Optional "Tap to unlock" feature allows unlocking by tapping your Apple Watch screen. Uses secure local authentication via Apple's frameworks.</p>
+
+      <div class="unlock-matrix">
+        <div class="unlock-card">
+          <div class="unlock-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg>
+          </div>
+          <span class="unlock-protocol-tag">[ PROTOCOL: WATCHKIT_BLE ]</span>
+          <h3>Apple Watch Unlock</h3>
+          <p>
+            Double-press the side crown or utilize configurable "Tap to Unlock" directly on your Apple Watch display. Uses Apple's certified local cryptographic authentication handshake.
+          </p>
+          <ul class="unlock-card-list">
+            <li>Side button double-tap</li>
+            <li>Optional screen tap gesture</li>
+            <li>Zero cloud authentication relays</li>
+          </ul>
         </div>
-        <div class="unlock-option">
-          <h3>⌚ Android Watch Unlock</h3>
-          <p>Framework ready for Android Wear OS companion app (available separately). Send unlock signals from your watch to mirrorLock via secure local connection. Same tap-to-unlock convenience as Apple Watch. Requires Android companion app for full functionality (framework included).</p>
+
+        <div class="unlock-card">
+          <div class="unlock-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3" ry="3"/><circle cx="12" cy="18" r="1"/><line x1="8" y1="5" x2="16" y2="5"/></svg>
+          </div>
+          <span class="unlock-protocol-tag">[ PROTOCOL: WEAR_OS_LAN ]</span>
+          <h3>Android Wear OS</h3>
+          <p>
+            Built-in companion framework for Wear OS smartwatches. Transmits authorized unlock signals over an encrypted local network broadcast directly to the MirrorLock daemon.
+          </p>
+          <ul class="unlock-card-list">
+            <li>Secure local socket pairing</li>
+            <li>Wrist haptic confirmation</li>
+            <li>Independent from Google Cloud</li>
+          </ul>
         </div>
-        <div class="unlock-option">
-          <h3>👆 Touch ID Unlock</h3>
-          <p>Rest your finger on your Mac's Touch ID sensor for instant authentication. Works seamlessly with Apple's secure enclave.</p>
+
+        <div class="unlock-card">
+          <div class="unlock-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 4"/><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"/><path d="M17.29 21.02c.12-.54.41-1.65.71-3.02"/><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/><path d="M8.65 22c.21-.66.45-1.32.57-2"/><path d="M14 13.12c0 2.38 0 6.38-1 8.88"/><path d="M2 16h.01"/><path d="M21.8 16c.2-2 .131-5.354 0-6"/><path d="M9 6.8a6 6 0 0 1 9 5.2v2"/></svg>
+          </div>
+          <span class="unlock-protocol-tag">[ PROTOCOL: SECURE_ENCLAVE ]</span>
+          <h3>Touch ID Enclave</h3>
+          <p>
+            Rest your finger on your Mac keyboard's Touch ID biometric sensor. Direct hardware verification via Apple's isolated Secure Enclave chip for instantaneous recovery.
+          </p>
+          <ul class="unlock-card-list">
+            <li>LocalAuthentication framework</li>
+            <li>Hardware biometric enclave</li>
+            <li>Immediate input bus re-engagement</li>
+          </ul>
         </div>
       </div>
     </section>
 
+    <!-- Operational Workflow Protocol -->
     <section id="how" class="section">
       <div class="section-header">
-        <h2>How It Works</h2>
-        <p class="section-description">
-          Simple, secure, and effective — MirrorLock protects your work without getting in the way.
+        <span class="section-eyebrow">// OPERATIONAL SEQUENCE</span>
+        <h2 class="section-title">DEPLOYMENT PROTOCOL</h2>
+        <p class="section-desc">
+          How MirrorLock operates within your daily engineering routine:
         </p>
       </div>
-      <div class="how-it-works">
-        <div class="how-step">
-          <h3>1. Activate Lock</h3>
-          <p>Click the menu bar icon or use your configurable hotkey to activate MirrorLock.</p>
+
+      <div class="protocol-steps">
+        <div class="protocol-step">
+          <span class="step-phase-badge">PHASE 01 // ENGAGE</span>
+          <h3>ARM DEFENSE</h3>
+          <p>
+            Initiate Claude Code, Cursor, or your build suite. Press <kbd>⌘</kbd><kbd>⇧</kbd><kbd>M</kbd> or tap the tactical menu bar icon to engage MirrorLock.
+          </p>
+          <div class="step-hud-callout">
+            <code>&gt; CGEventTap::engage() -&gt; INPUTS_CUT</code>
+          </div>
         </div>
-        <div class="how-step">
-          <h3>2. Secure Your Work</h3>
-          <p>Your desktop remains visible behind a subtle overlay while keyboard, mouse, and trackpad are hard-locked at the system level.</p>
+
+        <div class="protocol-step">
+          <span class="step-phase-badge">PHASE 02 // SURVEIL</span>
+          <h3>OBSERVE UNTOUCHED</h3>
+          <p>
+            Step away for coffee or lunch. Your display remains illuminated, IOKit halts sleep, and your AI agent codes without risk of cat, pet, or human accidental keystrokes.
+          </p>
+          <div class="step-hud-callout">
+            <code>&gt; ScreenCaptureKit::live_stream()</code>
+          </div>
         </div>
-        <div class="how-step">
-          <h3>3. Unlock Your Way</h3>
-          <p>Unlock instantly with Touch ID, double-press your Apple Watch side button, or use your Android Watch companion app.</p>
+
+        <div class="protocol-step">
+          <span class="step-phase-badge">PHASE 03 // DISENGAGE</span>
+          <h3>BIOMETRIC RECOVERY</h3>
+          <p>
+            Return to your desk. Rest your finger on Touch ID or double-press your Apple Watch crown. The overlay dissolves and hardware input control returns instantly.
+          </p>
+          <div class="step-hud-callout">
+            <code>&gt; Enclave::authorized() -&gt; UNLOCKED</code>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- Threat Audit / Comparison Matrix -->
+    <section id="comparison" class="section">
+      <div class="section-header">
+        <span class="section-eyebrow">// THREAT AUDIT &amp; CAPABILITY MATRIX</span>
+        <h2 class="section-title">WHY STANDARD LOCK SCREENS FAIL</h2>
+        <p class="section-desc">
+          Comparing MirrorLock against legacy macOS mechanisms for botsitting autonomous AI workflows.
+        </p>
+      </div>
+
+      <div class="matrix-table-wrap">
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th>CAPABILITY</th>
+              <th class="col-highlight">MIRRORLOCK v1.2.0</th>
+              <th>MACOS LOCK SCREEN</th>
+              <th>CAFFEINE / AMPHETAMINE</th>
+              <th>SCREENSAVER</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Screen Remains Visible</strong></td>
+              <td class="col-highlight">YES (Real-time live overlay)</td>
+              <td>NO (Blackout / Auth Wallpaper)</td>
+              <td>YES (Desktop exposed)</td>
+              <td>NO (Screensaver animation)</td>
+            </tr>
+            <tr>
+              <td><strong>Hardware Input Severance</strong></td>
+              <td class="col-highlight">YES (CGEventTap kernel drop)</td>
+              <td>NO (Keys wake / enter password)</td>
+              <td>NO (Anyone can type / click)</td>
+              <td>NO (Any keystroke dismisses)</td>
+            </tr>
+            <tr>
+              <td><strong>Prevents Mac Idle Sleep</strong></td>
+              <td class="col-highlight">YES (IOKit Power Assertion)</td>
+              <td>NO (Displays sleep quickly)</td>
+              <td>YES (Power assertion)</td>
+              <td>NO (System sleeps on timeout)</td>
+            </tr>
+            <tr>
+              <td><strong>Biometric Wrist Unlock</strong></td>
+              <td class="col-highlight">YES (Apple Watch &amp; Wear OS)</td>
+              <td>Apple Watch only (No Wear OS)</td>
+              <td>N/A (No lock)</td>
+              <td>N/A (Wakes on keypress)</td>
+            </tr>
+            <tr>
+              <td><strong>Intrusion Tripwire &amp; Alerts</strong></td>
+              <td class="col-highlight">YES (Watching eye &amp; audio tone)</td>
+              <td>NO</td>
+              <td>NO</td>
+              <td>NO</td>
+            </tr>
+            <tr>
+              <td><strong>Multi-Monitor Shielding</strong></td>
+              <td class="col-highlight">YES (Blackouts secondaries)</td>
+              <td>NO (Locks all screens)</td>
+              <td>NO (All screens stay visible)</td>
+              <td>NO</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Installation & Terminal Matrix -->
     <section id="install" class="section">
       <div class="section-header">
-        <h2>Installation</h2>
-        <p class="section-description">
-          Get MirrorLock running on your Mac in seconds.
+        <span class="section-eyebrow">// SYSTEM ACQUISITION</span>
+        <h2 class="section-title">DEPLOY MIRRORLOCK</h2>
+        <p class="section-desc">
+          Compatible with macOS 13+ (Ventura, Sonoma, Sequoia). Signed installer, zero Gatekeeper friction.
         </p>
       </div>
-      <div class="install-methods">
-        <div class="install-method">
-          <h3>🍺 Homebrew (Recommended)</h3>
-          <div class="install-code">
-            <p>brew tap shubhransh-gupta/tap</p>
-            <p>brew install --cask mirrorlock</p>
+
+      <div class="terminal-deck">
+        <div class="terminal-header">
+          <div class="mac-dots">
+            <span class="mac-dot mac-dot-red"></span>
+            <span class="mac-dot mac-dot-yellow"></span>
+            <span class="mac-dot mac-dot-green"></span>
+          </div>
+          <div class="terminal-tabs">
+            <button class="tab-btn active" data-tab="brew" type="button">HOMEBREW (RECOMMENDED)</button>
+            <button class="tab-btn" data-tab="curl" type="button">CURL ONELINER</button>
+            <button class="tab-btn" data-tab="pkg" type="button">DIRECT PKG / ZIP</button>
+          </div>
+        </div>
+
+        <!-- Tab 1: Homebrew -->
+        <div id="pane-brew" class="install-pane active">
+          <p class="pane-intro">Install via Homebrew tap with verified automatic update tracking:</p>
+          <div class="code-box">
+            <pre><code>brew install --cask shubhransh-gupta/tap/mirrorlock</code></pre>
+            <button class="btn-copy-code" type="button">COPY CMD</button>
+          </div>
+          <p class="pane-note">
+            Alternative step-by-step: <code>brew tap shubhransh-gupta/tap &amp;&amp; brew install --cask mirrorlock</code>
           </p>
-          <p>Or in a single command:</p>
-          <div class="install-code">
-            <p>brew install --cask shubhransh-gupta/tap/mirrorlock</p>
-          </div>
-          <p class="install-note">Installs cleanly via signed .pkg installer directly into /Applications without Gatekeeper warnings.</p>
         </div>
-        <div class="install-method">
-          <h3>💻 One-line Installer</h3>
-          <div class="install-code">
-            <p>curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh | bash</p>
+
+        <!-- Tab 2: Curl -->
+        <div id="pane-curl" class="install-pane">
+          <p class="pane-intro">Execute the official unattended automated installation script:</p>
+          <div class="code-box">
+            <pre><code>curl -fsSL https://raw.githubusercontent.com/shubhransh-gupta/mirrorLock/main/scripts/install.sh | bash</code></pre>
+            <button class="btn-copy-code" type="button">COPY CMD</button>
           </div>
-          <p class="install-note">Or download the installer (.pkg) or .zip directly from <a href="https://github.com/shubhransh-gupta/mirrorLock/releases/latest" target="_blank" rel="noopener">Releases</a>.</p>
+          <p class="pane-note">
+            Fetches the latest signed release and places it cleanly in <code>/Applications</code>.
+          </p>
+        </div>
+
+        <!-- Tab 3: Direct Download -->
+        <div id="pane-pkg" class="install-pane">
+          <p class="pane-intro">Direct standalone downloads for air-gapped workstations:</p>
+          <div class="direct-downloads-grid">
+            <a href="https://github.com/shubhransh-gupta/mirrorLock/releases/latest/download/MirrorLock-1.2.0.pkg" class="download-link-card">
+              <span class="download-card-icon">📦</span>
+              <div>
+                <div class="download-card-title">MirrorLock-1.2.0.pkg</div>
+                <p class="download-card-meta">macOS Installer Package (Signed)</p>
+              </div>
+            </a>
+            <a href="https://github.com/shubhransh-gupta/mirrorLock/releases/latest/download/MirrorLock-1.2.0.zip" class="download-link-card">
+              <span class="download-card-icon">🗜️</span>
+              <div>
+                <div class="download-card-title">MirrorLock-1.2.0.zip</div>
+                <p class="download-card-meta">Standalone Application Archive</p>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="security" class="section">
-      <div class="section-header">
-        <h2>Security & Privacy</h2>
-        <p class="section-description">
-          Your data stays yours — always.
-        </p>
-      </div>
-      <div class="security-points">
-        <div class="security-point">
-          <h3>🔒 Local Processing</h3>
-          <p>All authentication and processing happens locally on your Mac.</p>
-        </div>
-        <div class="security-point">
-          <h3>🌐 No Network Required</h3>
-          <p>Core functionality works completely offline — no internet connection needed.</p>
-        </div>
-        <div class="security-point">
-          <h3>📋 Open Source</h3>
-          <p>MIT licensed — audit the code yourself on <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener">GitHub</a>.</p>
-        </div>
-      </div>
-    </section>
-
+    <!-- Cybernetic Site Footer -->
     <footer class="site-footer">
-      <div class="footer-content">
-        <p>&copy; <span id="year"></span> shubhransh-gupta. All rights reserved.</p>
-        <p>
-          <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener">GitHub</a>
-          <span class="footer-separator">|</span>
-          <a href="https://shubhransh-gupta.github.io/mirrorLock" target="_blank" rel="noopener">Website</a>
-          <span class="footer-separator">|</span>
-          <a href="LICENSE" target="_blank" rel="noopener">License</a>
-        </p>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img src="assets/icon-512.png" alt="" width="32" height="32" style="border-radius: 4px;">
+          <div>
+            <div style="font-family: var(--font-display); font-weight: 800; font-size: 0.95rem; color: #fff;">
+              MIRRORLOCK PROTOCOL
+            </div>
+            <p class="footer-copy">
+              &copy; <span id="year">2026</span> shubhransh-gupta. MIT Licensed. Rekall Cybernetics Architecture.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <a href="https://github.com/shubhransh-gupta/mirrorLock" target="_blank" rel="noopener">// GITHUB REPOSITORY</a>
+          <a href="https://github.com/shubhransh-gupta/mirrorLock/releases" target="_blank" rel="noopener">// RELEASES</a>
+          <a href="https://github.com/shubhransh-gupta/mirrorLock/blob/main/LICENSE" target="_blank" rel="noopener">// MIT LICENSE</a>
+        </div>
       </div>
     </footer>
   </main>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
